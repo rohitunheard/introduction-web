@@ -166,6 +166,97 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 4000);
     });
 
+    // ── Certificates Category Filter ───────────────────────
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const certificateCards = document.querySelectorAll('.certificate-card');
+
+    if (filterButtons.length > 0 && certificateCards.length > 0) {
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                btn.classList.add('active');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                certificateCards.forEach(card => {
+                    const cardCategory = card.getAttribute('data-category');
+                    if (filterValue === 'all' || cardCategory === filterValue) {
+                        card.classList.remove('hide');
+                        // Fade animation effect
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(10px)';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 50);
+                    } else {
+                        card.classList.add('hide');
+                    }
+                });
+            });
+        });
+    }
+
+    // ── Certificates Lightbox Modal ──────────────────────
+    const lightbox = document.getElementById('certificateLightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const lightboxClose = document.getElementById('lightboxClose');
+    const viewCertButtons = document.querySelectorAll('.btn-view-cert');
+    const certImages = document.querySelectorAll('.certificate-image img');
+
+    if (lightbox && lightboxImg && lightboxClose) {
+        const openLightbox = (imgSrc, imgAlt) => {
+            lightboxImg.src = imgSrc;
+            lightboxCaption.textContent = imgAlt;
+            lightbox.classList.add('open');
+            lightbox.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden'; // Lock background scroll
+        };
+
+        const closeLightbox = () => {
+            lightbox.classList.remove('open');
+            lightbox.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = ''; // Unlock background scroll
+        };
+
+        // Open lightbox via button click
+        viewCertButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const card = btn.closest('.certificate-card');
+                const img = card.querySelector('.certificate-image img');
+                openLightbox(img.src, img.alt);
+            });
+        });
+
+        // Open lightbox via clicking the card image
+        certImages.forEach(img => {
+            img.style.cursor = 'pointer';
+            img.addEventListener('click', () => {
+                openLightbox(img.src, img.alt);
+            });
+        });
+
+        // Close events
+        lightboxClose.addEventListener('click', closeLightbox);
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox || e.target.classList.contains('lightbox-container')) {
+                closeLightbox();
+            }
+        });
+
+        // Close on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('open')) {
+                closeLightbox();
+            }
+        });
+    }
+
     // ── Smooth anchor scroll ─────────────────────────────
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
