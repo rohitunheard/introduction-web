@@ -1,0 +1,2297 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rohit Chhonkar — Interactive Resume</title>
+    <meta name="description" content="Interactive and print-ready resume of Rohit Chhonkar — Full Stack & AI Developer. Powered by MERN, FastAPI, and WebRTC.">
+    <meta name="author" content="Rohit Chhonkar">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================================================
+           1. DESIGN SYSTEM & VARIABLES
+           ========================================================================== */
+        :root[data-theme="dark"] {
+            --bg-app: #030712;
+            --bg-glow: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.08) 0%, rgba(3, 7, 18, 0) 70%);
+            --bg-card: rgba(17, 24, 39, 0.6);
+            --bg-card-hover: rgba(31, 41, 55, 0.7);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(99, 102, 241, 0.25);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --primary: #6366f1; /* Indigo */
+            --primary-rgb: 99, 102, 241;
+            --primary-dark: #4f46e5;
+            --accent: #06b6d4; /* Cyan */
+            --accent-rgb: 6, 182, 212;
+            --accent-dark: #0891b2;
+            --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+            --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.3);
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --radius-sm: 6px;
+        }
+
+        :root[data-theme="light"] {
+            --bg-app: #f8fafc;
+            --bg-glow: radial-gradient(circle at 50% 50%, rgba(79, 70, 229, 0.04) 0%, rgba(248, 250, 252, 0) 70%);
+            --bg-card: rgba(255, 255, 255, 0.75);
+            --bg-card-hover: rgba(255, 255, 255, 0.95);
+            --border: rgba(0, 0, 0, 0.06);
+            --border-hover: rgba(79, 70, 229, 0.2);
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --primary: #4f46e5;
+            --primary-rgb: 79, 70, 229;
+            --primary-dark: #3730a3;
+            --accent: #0891b2;
+            --accent-rgb: 8, 145, 178;
+            --accent-dark: #0e7490;
+            --shadow: 0 10px 30px -10px rgba(79, 70, 229, 0.06);
+            --card-shadow: 0 4px 20px -2px rgba(79, 70, 229, 0.02);
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --radius-sm: 6px;
+        }
+
+        /* Reset and Base */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-app);
+            background-image: var(--bg-glow);
+            color: var(--text-main);
+            line-height: 1.5;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Scrollbar styles */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-app);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* ==========================================================================
+           2. WEB DASHBOARD INTERACTIVE VIEW LAYOUT
+           ========================================================================== */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            max-width: 1360px;
+            margin: 40px auto;
+            padding: 0 24px;
+            gap: 32px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Left Static Navigation Sidebar */
+        aside.sidebar {
+            position: sticky;
+            top: 40px;
+            height: calc(100vh - 80px);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .profile-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .profile-avatar {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            box-shadow: 0 8px 16px -4px rgba(var(--primary-rgb), 0.3);
+            margin-bottom: 4px;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--bg-app);
+        }
+
+        .profile-avatar .status-badge {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 16px;
+            height: 16px;
+            background: #10b981;
+            border: 3px solid var(--bg-app);
+            border-radius: 50%;
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+        }
+
+        .profile-info h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .profile-info p {
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .sidebar-links {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 4px;
+            margin-top: 8px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border-radius: var(--radius-md);
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-link svg {
+            width: 18px;
+            height: 18px;
+            stroke-width: 2px;
+            transition: stroke 0.2s;
+        }
+
+        .sidebar-link:hover, .sidebar-link.active {
+            color: var(--text-main);
+            background: var(--primary-glow);
+            transform: translateX(4px);
+        }
+
+        .sidebar-link:hover svg, .sidebar-link.active svg {
+            stroke: var(--primary);
+        }
+
+        /* Widgets Card */
+        .widgets-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .widget-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        /* Switch styling */
+        .theme-switch, .format-switch {
+            position: relative;
+            display: inline-block;
+            width: 42px;
+            height: 22px;
+        }
+
+        .theme-switch input, .format-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--border);
+            transition: .3s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+        .btn-action-primary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 0.88rem;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(var(--primary-rgb), 0.25);
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .btn-action-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(var(--primary-rgb), 0.4);
+        }
+
+        .btn-action-primary svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Main Scrollable Dashboard Content */
+        main.dashboard-content {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        /* Main Heading / Hero Info */
+        .intro-header-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 36px 40px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .intro-header-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(var(--accent-rgb), 0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .intro-info h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, var(--text-main) 30%, var(--primary) 70%, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+        }
+
+        .intro-info .role-tagline {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px 16px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+
+        .contact-item svg {
+            width: 16px;
+            height: 16px;
+            stroke-width: 2px;
+            stroke: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .contact-item:hover {
+            color: var(--primary);
+        }
+
+        /* General Dashboard Section Styles */
+        .content-section {
+            scroll-margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--primary);
+            stroke-width: 2.5px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px 28px;
+            box-shadow: var(--shadow);
+            transition: border-color 0.2s, background-color 0.2s, transform 0.2s;
+        }
+
+        .card:hover {
+            border-color: var(--border-hover);
+        }
+
+        /* Professional Summary */
+        .summary-card p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        .summary-card strong {
+            color: var(--text-main);
+            font-weight: 600;
+        }
+
+        /* Skills Matrix */
+        .skills-matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .skill-category-card {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 18px 20px;
+        }
+
+        .skill-category-card h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 6px;
+        }
+
+        .skills-badges-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-badge {
+            background: var(--border);
+            color: var(--text-main);
+            font-size: 0.76rem;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            user-select: none;
+            border: 1px solid transparent;
+        }
+
+        .skill-badge:hover {
+            background: var(--primary-glow);
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .skill-badge.active-filter {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 10px rgba(var(--primary-rgb), 0.3);
+        }
+
+        /* Timeline Items (Experience & Education) */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 4px;
+            width: 2px;
+            height: calc(100% - 20px);
+            background: var(--border);
+        }
+
+        .timeline-item {
+            position: relative;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -20px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--bg-app);
+            border: 2.5px solid var(--primary);
+            box-shadow: 0 0 0 4px var(--bg-app);
+            z-index: 2;
+            transition: border-color 0.2s;
+        }
+
+        .timeline-item:hover .timeline-dot {
+            border-color: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .timeline-card {
+            padding: 20px 24px;
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 12px;
+        }
+
+        .timeline-title h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .timeline-title h4 {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--primary);
+            margin-top: 1px;
+        }
+
+        .timeline-date {
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            font-family: 'Space Grotesk', monospace;
+            background: var(--border);
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
+        }
+
+        .timeline-bullets {
+            margin-left: 16px;
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .timeline-bullets li::marker {
+            color: var(--primary);
+        }
+
+        /* Projects Showcase Grid */
+        .projects-showcase {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .project-card {
+            position: relative;
+            padding: 24px;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .project-card.dimmed {
+            opacity: 0.35;
+            transform: scale(0.98);
+        }
+
+        .project-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .project-title-group h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .project-date {
+            font-size: 0.76rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            font-family: 'Space Grotesk', monospace;
+        }
+
+        .project-desc {
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 14px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .project-tag {
+            background: var(--primary-glow);
+            color: var(--primary);
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s ease;
+        }
+
+        .project-tag:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 16px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .project-link {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-main);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .project-link svg {
+            width: 14px;
+            height: 14px;
+            stroke-width: 2.5px;
+            stroke: var(--primary);
+        }
+
+        .project-link:hover {
+            color: var(--primary);
+        }
+
+        .other-projects-note {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 12px;
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
+            border: 1px dashed var(--border);
+        }
+
+        .other-projects-note a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .other-projects-note a:hover {
+            text-decoration: underline;
+        }
+
+        /* Certifications Grid Layout */
+        .certs-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .cert-card {
+            padding: 18px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 14px;
+            min-height: 160px;
+        }
+
+        .cert-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .cert-issuer {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .cert-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.3;
+        }
+
+        .cert-date-verify {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.74rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .cert-date-verify span {
+            font-family: 'Space Grotesk', monospace;
+        }
+
+        .btn-view-cert {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid var(--border);
+            padding: 6px 12px;
+            font-size: 0.74rem;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: fit-content;
+        }
+
+        .btn-view-cert svg {
+            width: 13px;
+            height: 13px;
+            stroke-width: 2px;
+        }
+
+        .btn-view-cert:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Achievements Layout */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .achievement-card {
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .achievement-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-glow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .achievement-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--primary);
+            stroke-width: 2px;
+        }
+
+        .achievement-text h4 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .achievement-text p {
+            font-size: 0.76rem;
+            color: var(--text-muted);
+            margin-top: 1px;
+        }
+
+        /* ==========================================================================
+           3. LIGHTBOX CREDENTIALS PREVIEW MODAL
+           ========================================================================== */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(3, 7, 18, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 24px;
+        }
+
+        .lightbox.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .lightbox-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            max-width: 860px;
+            width: 100%;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .lightbox.active .lightbox-card {
+            transform: scale(1);
+        }
+
+        .lightbox-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .lightbox-header h3 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .btn-lightbox-close {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-lightbox-close:hover {
+            color: var(--text-main);
+        }
+
+        .btn-lightbox-close svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .lightbox-body {
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #030712;
+            flex-grow: 1;
+            min-height: 200px;
+        }
+
+        .lightbox-body img {
+            max-width: 100%;
+            max-height: calc(90vh - 140px);
+            object-fit: contain;
+            border-radius: var(--radius-md);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .lightbox-body .lightbox-loader {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ==========================================================================
+           4. PRINT PREVIEW CONTAINER (FOR SCREEN SIMULATION)
+           ========================================================================== */
+        .print-preview-mode {
+            background-color: #374151 !important;
+            background-image: none !important;
+            padding: 40px 20px !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+        }
+
+        .print-preview-mode .dashboard-container {
+            display: none !important; /* Hide web layout completely */
+        }
+
+        /* Floating controllers in Print Preview Mode */
+        .print-preview-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: none;
+            gap: 10px;
+            z-index: 500;
+        }
+
+        .print-preview-mode .print-preview-controls {
+            display: flex;
+        }
+
+        .btn-preview-control {
+            background: #1f2937;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 10px 18px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-preview-control:hover {
+            background: #374151;
+            transform: translateY(-1px);
+        }
+
+        .btn-preview-control-primary {
+            background: #4f46e5;
+            border-color: #4f46e5;
+        }
+
+        .btn-preview-control-primary:hover {
+            background: #4338ca;
+        }
+
+        /* ==========================================================================
+           5. A4 PRINT LAYOUT SHEET (ACTIVE UNDER PRINT-PREVIEW CLASS OR @MEDIA PRINT)
+           ========================================================================== */
+        .print-a4-sheet {
+            display: none; /* Hidden in normal web view mode */
+            background: white;
+            width: 210mm; /* A4 width */
+            height: 297mm; /* A4 height */
+            color: #0f172a;
+            padding: 12mm 15mm;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            font-size: 11.5px;
+            line-height: 1.35;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .print-preview-mode .print-a4-sheet {
+            display: block; /* Shown on screen in preview mode */
+        }
+
+        /* Print Typography overrides */
+        .print-a4-sheet h1, 
+        .print-a4-sheet h2, 
+        .print-a4-sheet h3, 
+        .print-a4-sheet h4 {
+            color: #0f172a !important;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .print-header {
+            text-align: center;
+            border-bottom: 2px solid #4f46e5;
+            padding-bottom: 6px;
+            margin-bottom: 10px;
+        }
+
+        .print-header h1 {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 1px;
+        }
+
+        .print-header .print-role {
+            font-size: 10px;
+            font-weight: 600;
+            color: #4f46e5;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+
+        .print-contact-row {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 8.5px;
+            color: #475569;
+            font-family: 'Space Grotesk', monospace;
+        }
+
+        .print-contact-row span {
+            display: inline-block;
+        }
+
+        .print-contact-row a {
+            color: #475569;
+            text-decoration: none;
+        }
+
+        /* A4 Columns Grid */
+        .print-grid {
+            display: grid;
+            grid-template-columns: 1.7fr 1fr;
+            gap: 16px;
+        }
+
+        .print-col {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .print-section {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .print-section-title {
+            font-size: 9.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #0f172a;
+            border-bottom: 1.5px solid #e2e8f0;
+            padding-bottom: 2px;
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .print-section-title svg {
+            width: 11px;
+            height: 11px;
+            stroke: #4f46e5;
+            stroke-width: 2.5px;
+        }
+
+        /* Print blocks */
+        .print-item-block {
+            margin-bottom: 6px;
+        }
+
+        .print-item-block:last-child {
+            margin-bottom: 0;
+        }
+
+        .print-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 2px;
+        }
+
+        .print-item-title {
+            font-size: 9.5px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .print-item-subtitle {
+            font-size: 8.5px;
+            font-weight: 600;
+            color: #4f46e5;
+        }
+
+        .print-item-date {
+            font-size: 8px;
+            color: #64748b;
+            font-family: 'Space Grotesk', monospace;
+            font-weight: 500;
+        }
+
+        .print-bullet-list {
+            margin-left: 10px;
+            font-size: 8.2px;
+            color: #334155;
+            line-height: 1.3;
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .print-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px;
+            margin-top: 3px;
+        }
+
+        .print-tag {
+            font-size: 7.5px;
+            font-weight: 600;
+            padding: 0px 4px;
+            border-radius: 3px;
+            border: 0.5px solid #cbd5e1;
+            color: #334155;
+            background: #f8fafc;
+        }
+
+        .print-skill-group {
+            margin-bottom: 4px;
+        }
+
+        .print-skill-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .print-skill-group-title {
+            font-size: 8.5px;
+            font-weight: 700;
+            color: #475569;
+            margin-bottom: 1px;
+        }
+
+        .print-skill-list {
+            font-size: 8.2px;
+            color: #334155;
+            line-height: 1.25;
+        }
+
+        .print-cert-item {
+            font-size: 8.2px;
+            color: #334155;
+            line-height: 1.25;
+            margin-bottom: 3.5px;
+        }
+
+        .print-cert-item:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ==========================================================================
+           6. RESPONSIVE MEDIA QUERIES (MOBILE OPTIMIZATION)
+           ========================================================================== */
+        @media screen and (max-width: 1024px) {
+            .dashboard-container {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                margin: 20px auto;
+            }
+
+            aside.sidebar {
+                position: relative;
+                top: 0;
+                height: auto;
+            }
+
+            .profile-card {
+                flex-direction: row;
+                text-align: left;
+                align-items: center;
+                gap: 20px;
+                justify-content: flex-start;
+            }
+
+            .sidebar-links {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+                gap: 6px;
+            }
+
+            .sidebar-link {
+                justify-content: center;
+                font-size: 0.8rem;
+                padding: 8px 10px;
+            }
+
+            .widgets-card {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .widget-row {
+                gap: 10px;
+            }
+
+            .btn-action-primary {
+                width: auto;
+                flex-grow: 1;
+            }
+        }
+
+        @media screen and (max-width: 640px) {
+            .profile-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .intro-header-card {
+                padding: 24px;
+            }
+
+            .intro-info h1 {
+                font-size: 1.7rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .timeline-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* ==========================================================================
+           7. NATIVE PRINT RULES (FOR SAVING TO PDF)
+           ========================================================================== */
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        @media print {
+            body {
+                background: white !important;
+                color: #0f172a !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                overflow: visible !important;
+            }
+
+            /* Hide all interactive components */
+            .dashboard-container,
+            .print-preview-controls,
+            .lightbox {
+                display: none !important;
+            }
+
+            /* Render only print-a4-sheet */
+            .print-a4-sheet {
+                display: block !important;
+                box-shadow: none !important;
+                padding: 10mm 12mm !important;
+                width: 210mm !important;
+                height: 297mm !important;
+                page-break-after: avoid;
+                page-break-before: avoid;
+                margin: 0 !important;
+                box-sizing: border-box;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating controls active ONLY in Screen Print Preview Mode -->
+    <div class="print-preview-controls" id="printPreviewControls">
+        <button class="btn-preview-control" onclick="toggleFormatView()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="9" y1="3" x2="9" y2="21"></line>
+            </svg>
+            Back to Dashboard
+        </button>
+        <button class="btn-preview-control btn-preview-control-primary" onclick="window.print()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                <rect x="6" y="14" width="12" height="8"></rect>
+            </svg>
+            Print / Save PDF
+        </button>
+    </div>
+
+    <!-- ==========================================================================
+       A. INTERACTIVE WEB VIEW: DASHBOARD CONTAINER
+       ========================================================================== -->
+    <div class="dashboard-container" id="dashboardView">
+        
+        <!-- Left Sticky Sidebar -->
+        <aside class="sidebar">
+            <!-- Profile Info Card -->
+            <div class="profile-card">
+                <div class="profile-avatar">
+                    <img src="assets/images/hero-portrait.jpg" alt="Rohit Chhonkar">
+                    <div class="status-badge" title="Open to opportunities"></div>
+                </div>
+                <div class="profile-info">
+                    <h2>Rohit Chhonkar</h2>
+                    <p>Full Stack & AI Developer</p>
+                </div>
+                <div class="sidebar-links">
+                    <a href="#summary" class="sidebar-link active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        Summary
+                    </a>
+                    <a href="#skills" class="sidebar-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                        Technical Skills
+                    </a>
+                    <a href="#experience" class="sidebar-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        Experience
+                    </a>
+                    <a href="#projects" class="sidebar-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                        Projects
+                    </a>
+                    <a href="#certifications" class="sidebar-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                        Certifications
+                    </a>
+                </div>
+            </div>
+
+            <!-- Control Settings Card -->
+            <div class="widgets-card">
+                <div class="widget-row">
+                    <span>Dark Theme</span>
+                    <label class="theme-switch">
+                        <input type="checkbox" id="themeToggler" checked onchange="toggleTheme()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div class="widget-row">
+                    <span>A4 Print View</span>
+                    <label class="format-switch">
+                        <input type="checkbox" id="formatToggler" onchange="toggleFormatView()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <button class="btn-action-primary" onclick="window.print()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                        <rect x="6" y="14" width="12" height="8"></rect>
+                    </svg>
+                    Print / Save PDF
+                </button>
+            </div>
+        </aside>
+
+        <!-- Right Main Scrollable Panel -->
+        <main class="dashboard-content">
+            
+            <!-- Intro Header Details -->
+            <section class="intro-header-card">
+                <div class="intro-info">
+                    <h1>Rohit Chhonkar</h1>
+                    <div class="role-tagline">Full Stack & AI Developer</div>
+                    
+                    <div class="contact-grid">
+                        <div class="contact-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                            <span>Agra, Uttar Pradesh</span>
+                        </div>
+                        <a href="tel:+916398099404" class="contact-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                            <span>+91 6398099404</span>
+                        </a>
+                        <a href="mailto:contact@rohitchhonkar.click" class="contact-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                            <span>contact@rohitchhonkar.click</span>
+                        </a>
+                        <a href="https://rohitchhonkar.click" target="_blank" class="contact-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                            <span>rohitchhonkar.click</span>
+                        </a>
+                        <a href="https://github.com/rohitunheard" target="_blank" class="contact-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 009 18.13V22"></path></svg>
+                            <span>github.com/rohitunheard</span>
+                        </a>
+                        <a href="https://linkedin.com/in/rohit-chhonkar-3b07622a2/" target="_blank" class="contact-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                            <span>linkedin.com/in/rohit-chhonkar</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Professional Summary Section -->
+            <section class="content-section" id="summary">
+                <div class="section-header">
+                    <div class="section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        Professional Summary
+                    </div>
+                </div>
+                <div class="card summary-card">
+                    <p>
+                        Full Stack Developer focused on building <strong>AI-powered web applications</strong> and <strong>real-time communication platforms</strong> using MERN, FastAPI, WebRTC, and modern cloud tools. Built 10+ production-style projects including conversational voice AI, collaborative pair programming workspaces, and intelligent recruitment portals. Passionate about high-throughput scalable backend architectures, clean relational and document database structures, and practical production integrations of generative AI.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Technical Skills Matrix Section -->
+            <section class="content-section" id="skills">
+                <div class="section-header">
+                    <div class="section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                        Technical Skills Matrix
+                    </div>
+                </div>
+                <div class="skills-matrix">
+                    <!-- Languages -->
+                    <div class="card skill-category-card">
+                        <h3>Languages</h3>
+                        <div class="skills-badges-list">
+                            <span class="skill-badge" data-skill="JavaScript">JavaScript</span>
+                            <span class="skill-badge" data-skill="TypeScript">TypeScript</span>
+                            <span class="skill-badge" data-skill="C">C</span>
+                            <span class="skill-badge" data-skill="Java">Java</span>
+                            <span class="skill-badge" data-skill="HTML5">HTML5 / CSS3</span>
+                        </div>
+                    </div>
+                    <!-- Web & Frameworks -->
+                    <div class="card skill-category-card">
+                        <h3>Web & Frameworks</h3>
+                        <div class="skills-badges-list">
+                            <span class="skill-badge" data-skill="React.js">React.js</span>
+                            <span class="skill-badge" data-skill="Next.js">Next.js</span>
+                            <span class="skill-badge" data-skill="Node.js">Node.js</span>
+                            <span class="skill-badge" data-skill="Express.js">Express.js</span>
+                            <span class="skill-badge" data-skill="FastAPI">FastAPI</span>
+                            <span class="skill-badge" data-skill="WebRTC">WebRTC</span>
+                            <span class="skill-badge" data-skill="Socket.io">Socket.io</span>
+                            <span class="skill-badge" data-skill="Tailwind CSS">Tailwind CSS</span>
+                        </div>
+                    </div>
+                    <!-- Databases & Tools -->
+                    <div class="card skill-category-card">
+                        <h3>Databases & Tools</h3>
+                        <div class="skills-badges-list">
+                            <span class="skill-badge" data-skill="MongoDB">MongoDB</span>
+                            <span class="skill-badge" data-skill="Git">Git / GitHub</span>
+                            <span class="skill-badge" data-skill="GitHub Actions">CI/CD Pipeline</span>
+                            <span class="skill-badge" data-skill="JWT">JWT Security</span>
+                            <span class="skill-badge" data-skill="REST APIs">REST APIs</span>
+                        </div>
+                    </div>
+                    <!-- AI & SDKs -->
+                    <div class="card skill-category-card">
+                        <h3>AI & Integrations</h3>
+                        <div class="skills-badges-list">
+                            <span class="skill-badge" data-skill="Groq API">Groq AI</span>
+                            <span class="skill-badge" data-skill="Whisper">Whisper ASR</span>
+                            <span class="skill-badge" data-skill="ElevenLabs">ElevenLabs Voice</span>
+                            <span class="skill-badge" data-skill="F5-TTS">F5-TTS</span>
+                            <span class="skill-badge" data-skill="Stream SDK">Stream.io SDK</span>
+                            <span class="skill-badge" data-skill="Clerk Auth">Clerk Auth</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Experience Section -->
+            <section class="content-section" id="experience">
+                <div class="section-header">
+                    <div class="section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        Experience & Internships
+                    </div>
+                </div>
+                <div class="timeline">
+                    <!-- ASD Internship -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="card timeline-card">
+                            <div class="timeline-header">
+                                <div class="timeline-title">
+                                    <h3>Full Stack Web Development Intern</h3>
+                                    <h4>Academy of Skill Development (ASD)</h4>
+                                </div>
+                                <span class="timeline-date">Jun 2026</span>
+                            </div>
+                            <ul class="timeline-bullets">
+                                <li>Developed core candidate and recruiter authentication routes using JSON Web Tokens (JWT) and secure, signed HTTP-only cookies.</li>
+                                <li>Engineered 20+ modular, reusable UI components in React, reducing client-side load times and improving page interactions.</li>
+                                <li>Built and optimized scalable REST API endpoints in Node.js/Express for applicant matching, successfully mapping 15+ database collections.</li>
+                                <li>Collaborated with senior industry mentors using Git branch-and-merge pipelines, adopting Agile models.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Education B.Tech -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="card timeline-card">
+                            <div class="timeline-header">
+                                <div class="timeline-title">
+                                    <h3>B.Tech in Computer Science & Engineering</h3>
+                                    <h4>Anand Engineering College, Agra (Dr. A.P.J. Abdul Kalam Technical University)</h4>
+                                </div>
+                                <span class="timeline-date">2023 — Present</span>
+                            </div>
+                            <ul class="timeline-bullets">
+                                <li>Key Focus Areas: Data Structures & Algorithms (DSA), Object-Oriented Programming (OOP), Database Systems (DBMS), Web Architectures.</li>
+                                <li>Expected Graduation: Spring 2027. Maintain high performance in technical and lab curriculums.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Education High school -->
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="card timeline-card">
+                            <div class="timeline-header">
+                                <div class="timeline-title">
+                                    <h3>Intermediate & High School (Science Stream)</h3>
+                                    <h4>S.N.S.M. Inter College, Bisawar, Hathras (UP Board)</h4>
+                                </div>
+                                <span class="timeline-date">2019 — 2021</span>
+                            </div>
+                            <ul class="timeline-bullets">
+                                <li>Class XII: Focused on Physics, Chemistry, and Mathematics (PCM). Class of 2021.</li>
+                                <li>Class X: General Sciences and Mathematics. Class of 2019.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Featured Projects Section -->
+            <section class="content-section" id="projects">
+                <div class="section-header">
+                    <div class="section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                        Featured Projects
+                    </div>
+                </div>
+                <div class="projects-showcase">
+                    
+                    <!-- Project 1: Aura Voice -->
+                    <div class="card project-card" data-tags="React.js Node.js Express.js MongoDB FastAPI Whisper Groq API ElevenLabs F5-TTS HTML5 CSS3">
+                        <div class="project-card-header">
+                            <div class="project-title-group">
+                                <h3>Aura Voice — Conversational Voice AI</h3>
+                            </div>
+                            <span class="project-date">2026</span>
+                        </div>
+                        <p class="project-desc">
+                            Built an ultra-responsive conversational voice assistant integrating ElevenLabs, Groq API, and Whisper to complete speech-to-speech roundtrips in under 500ms. Configured FastAPI background jobs to stream real-time audio chunks and designed robust client-side interruption handlers using Custom HTML5 Canvas audio wave nodes.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">React.js</span>
+                            <span class="project-tag">FastAPI</span>
+                            <span class="project-tag">Groq AI</span>
+                            <span class="project-tag">Whisper</span>
+                            <span class="project-tag">ElevenLabs</span>
+                            <span class="project-tag">MongoDB</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/rohitunheard/Aura-Voice" target="_blank" class="project-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path></svg>
+                                GitHub Repo
+                            </a>
+                            <a href="https://github.com/rohitunheard/Aura-Voice" target="_blank" class="project-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                Live Demo
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 2: Smart Job Portal -->
+                    <div class="card project-card" data-tags="React.js Node.js Express.js MongoDB JWT REST APIs HTML5 CSS3 Tailwind CSS">
+                        <div class="project-card-header">
+                            <div class="project-title-group">
+                                <h3>Smart Job Portal & AI Resume Screener</h3>
+                            </div>
+                            <span class="project-date">2026</span>
+                        </div>
+                        <p class="project-desc">
+                            Engineered an end-to-end recruiter-applicant matching portal featuring secure session handling via HTTP-only cookie JWT tokens. Created dynamic matching logic indexing resume text structures across 15+ MongoDB collections, supporting custom keyword match scoring and role dashboards.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">MERN Stack</span>
+                            <span class="project-tag">React.js</span>
+                            <span class="project-tag">MongoDB</span>
+                            <span class="project-tag">JWT</span>
+                            <span class="project-tag">Tailwind CSS</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/rohitunheard" target="_blank" class="project-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path></svg>
+                                GitHub
+                            </a>
+                            <a href="https://github.com/rohitunheard" target="_blank" class="project-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                Live Portal
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 3: CodeChat-IQ -->
+                    <div class="card project-card" data-tags="React.js Node.js Express.js MongoDB Stream SDK Clerk Auth Tailwind CSS HTML5 CSS3">
+                        <div class="project-card-header">
+                            <div class="project-title-group">
+                                <h3>CodeChat-IQ — Collaborative Pair Programming Workspace</h3>
+                            </div>
+                            <span class="project-date">2025</span>
+                        </div>
+                        <p class="project-desc">
+                            Designed a real-time peer-to-peer workspace enabling live coding session syncs alongside video calls. Integrated Stream.io SDK streams for video feed and Clerk Auth for identity verification. Built a shared code editor syncing keypress buffers across client sessions.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">React.js</span>
+                            <span class="project-tag">Stream SDK</span>
+                            <span class="project-tag">Clerk Auth</span>
+                            <span class="project-tag">Tailwind CSS</span>
+                            <span class="project-tag">Socket.io</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/rohitunheard" target="_blank" class="project-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path></svg>
+                                Code
+                            </a>
+                            <a href="https://github.com/rohitunheard" target="_blank" class="project-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                Live Demo
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 4: Vyaapaar -->
+                    <div class="card project-card" data-tags="React.js TypeScript Vite Tailwind CSS HTML5 CSS3">
+                        <div class="project-card-header">
+                            <div class="project-title-group">
+                                <h3>Vyaapaar — Retail POS Billing & Analytics Dashboard</h3>
+                            </div>
+                            <span class="project-date">2025</span>
+                        </div>
+                        <p class="project-desc">
+                            Developed a high-performance retail billing system with strict static typing using TypeScript and Vite. Integrated atomic transactional state updates mapping local inventory levels, generating detailed ledger shift files and transaction analytics.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">TypeScript</span>
+                            <span class="project-tag">Vite</span>
+                            <span class="project-tag">React.js</span>
+                            <span class="project-tag">Tailwind CSS</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/rohitunheard/Vyaapaar" target="_blank" class="project-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path></svg>
+                                Code Repo
+                            </a>
+                            <a href="https://github.com/rohitunheard/Vyaapaar" target="_blank" class="project-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                Live Demo
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="other-projects-note">
+                        Other key projects include <strong>NexaCall</strong> (WebRTC video platform) and <strong>Synergy-Boards</strong> (Kanban system) available on my <a href="https://github.com/rohitunheard" target="_blank">GitHub profile</a>.
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Certifications Section -->
+            <section class="content-section" id="certifications">
+                <div class="section-header">
+                    <div class="section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                        Professional Certifications
+                    </div>
+                </div>
+                <div class="certs-container">
+                    
+                    <!-- Cisco JS Essentials -->
+                    <div class="card cert-card">
+                        <div class="cert-info">
+                            <span class="cert-issuer">Cisco Academy & JS Inst.</span>
+                            <h4 class="cert-name">JavaScript Essentials 1</h4>
+                        </div>
+                        <div class="cert-date-verify">
+                            <span>Jul 2026</span>
+                            <button class="btn-view-cert" onclick="openLightbox('JavaScript Essentials 1', 'assets/images/cisco-javascript-essentials.jpg')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                Preview
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- ASD MERN stack -->
+                    <div class="card cert-card">
+                        <div class="cert-info">
+                            <span class="cert-issuer">ASD Academy</span>
+                            <h4 class="cert-name">MERN Stack Internship (A++)</h4>
+                        </div>
+                        <div class="cert-date-verify">
+                            <span>Jun 2026</span>
+                            <button class="btn-view-cert" onclick="openLightbox('MERN Stack Internship Certificate (Grade A++)', 'assets/images/asd-mern-internship.jpg')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                Preview
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Cisco Cyber Security -->
+                    <div class="card cert-card">
+                        <div class="cert-info">
+                            <span class="cert-issuer">Cisco Networking Academy</span>
+                            <h4 class="cert-name">Introduction to Cybersecurity</h4>
+                        </div>
+                        <div class="cert-date-verify">
+                            <span>May 2025</span>
+                            <button class="btn-view-cert" onclick="openLightbox('Introduction to Cybersecurity Certificate', 'assets/images/cisco-cybersecurity.jpg')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                Preview
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- LearnTube assessments -->
+                    <div class="card cert-card">
+                        <div class="cert-info">
+                            <span class="cert-issuer">LearnTube.ai</span>
+                            <h4 class="cert-name">Technical assessments (Web Dev & JS)</h4>
+                        </div>
+                        <div class="cert-date-verify">
+                            <span>Jul 2026</span>
+                            <button class="btn-view-cert" onclick="openLightbox('Web Development Assessment Certificate', 'assets/images/learntube-web-development.jpg')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                Preview
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- be10x / GUVI AI -->
+                    <div class="card cert-card">
+                        <div class="cert-info">
+                            <span class="cert-issuer">be10x & GUVI | HCL</span>
+                            <h4 class="cert-name">AI Tools & Data Science Workshops</h4>
+                        </div>
+                        <div class="cert-date-verify">
+                            <span>Jul 2026</span>
+                            <button class="btn-view-cert" onclick="openLightbox('AI Tools Workshop Certificate', 'assets/images/be10x-certificate.png')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                Preview
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Meta certifications -->
+                    <div class="card cert-card">
+                        <div class="cert-info">
+                            <span class="cert-issuer">Meta Small Business Academy</span>
+                            <h4 class="cert-name">Meta Digital Marketing Portfolio</h4>
+                        </div>
+                        <div class="cert-date-verify">
+                            <span>Dec 2023</span>
+                            <button class="btn-view-cert" onclick="openLightbox('Meta Instagram Marketing Certificate', 'assets/images/meta-instagram-marketing.png')">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                Preview
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Key Achievements Section -->
+            <section class="content-section" id="achievements">
+                <div class="section-header">
+                    <div class="section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                        Key Accomplishments
+                    </div>
+                </div>
+                <div class="achievements-grid">
+                    <div class="card achievement-card">
+                        <div class="achievement-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                        </div>
+                        <div class="achievement-text">
+                            <h4>10+ Production Builds</h4>
+                            <p>Shipped voice assistants, video servers, and interactive POS dashboards.</p>
+                        </div>
+                    </div>
+                    <div class="card achievement-card">
+                        <div class="achievement-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                        </div>
+                        <div class="achievement-text">
+                            <h4>Grade A++ Internship</h4>
+                            <p>Awarded top grade for backend optimization at ASD Academy.</p>
+                        </div>
+                    </div>
+                    <div class="card achievement-card">
+                        <div class="achievement-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 009 18.13V22"></path></svg>
+                        </div>
+                        <div class="achievement-text">
+                            <h4>Active Contributor</h4>
+                            <p>Maintain 11+ repositories and 300+ commits on GitHub.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- ==========================================================================
+       B. STATIC A4 PRINT SHEET (SHOWN IN PRINT MODE & SENT TO PRINTER)
+       ========================================================================== -->
+    <div class="print-a4-sheet" id="printSheet">
+        <!-- Header -->
+        <header class="print-header">
+            <h1>Rohit Chhonkar</h1>
+            <div class="print-role">Full Stack & AI Developer</div>
+            <div class="print-contact-row">
+                <span>Agra, Uttar Pradesh</span>
+                <span>•</span>
+                <span>+91 6398099404</span>
+                <span>•</span>
+                <a href="mailto:contact@rohitchhonkar.click">contact@rohitchhonkar.click</a>
+                <span>•</span>
+                <a href="https://rohitchhonkar.click">rohitchhonkar.click</a>
+                <span>•</span>
+                <a href="https://github.com/rohitunheard">github.com/rohitunheard</a>
+                <span>•</span>
+                <a href="https://linkedin.com/in/rohit-chhonkar-3b07622a2/">linkedin.com/in/rohit-chhonkar</a>
+            </div>
+        </header>
+
+        <div class="print-grid">
+            
+            <!-- Left Grid Column -->
+            <div class="print-col">
+                
+                <!-- Summary -->
+                <section class="print-section">
+                    <h2 class="print-section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                        Professional Summary
+                    </h2>
+                    <p style="font-size: 8.2px; color: #334155; line-height: 1.35;">
+                        Full Stack Developer focused on building AI-powered web applications and real-time platforms using MERN, FastAPI, and WebRTC. Engineered conversational assistants, pair-programming workspaces, and recruitment portals. Focuses on scalable backend architectures, secure session auth, and smooth API design.
+                    </p>
+                </section>
+
+                <!-- Experience -->
+                <section class="print-section">
+                    <h2 class="print-section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        Experience & Internships
+                    </h2>
+                    
+                    <div class="print-item-block">
+                        <div class="print-item-header">
+                            <div>
+                                <span class="print-item-title">Full Stack Web Development Intern</span><br>
+                                <span class="print-item-subtitle">Academy of Skill Development (ASD)</span>
+                            </div>
+                            <span class="print-item-date">June 2026</span>
+                        </div>
+                        <ul class="print-bullet-list">
+                            <li>Developed candidate-recruiter auth routes using JWT and secure HTTP-only cookies.</li>
+                            <li>Engineered 20+ responsive React components, reducing client-side load latency.</li>
+                            <li>Built REST APIs in Node.js/Express for matching algorithms across 15+ DB collections.</li>
+                            <li>Collaborated using Git branch workflows and Agile scrum methodologies.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Featured Projects -->
+                <section class="print-section">
+                    <h2 class="print-section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                        Featured Projects
+                    </h2>
+
+                    <!-- Aura Voice -->
+                    <div class="print-item-block">
+                        <div class="print-item-header">
+                            <span class="print-item-title">Aura Voice — Conversational Voice AI</span>
+                            <span class="print-item-date">2026</span>
+                        </div>
+                        <ul class="print-bullet-list">
+                            <li>Combined ElevenLabs, Groq, and Whisper for Speech-to-Speech in under 500ms.</li>
+                            <li>Implemented FastAPI streaming audio packets and Canvas real-time visualizers.</li>
+                            <li>Built client interruption algorithms to immediately halt playback on user talk-back.</li>
+                        </ul>
+                        <div class="print-tags">
+                            <span class="print-tag">React</span>
+                            <span class="print-tag">FastAPI</span>
+                            <span class="print-tag">Groq AI</span>
+                            <span class="print-tag">Whisper</span>
+                            <span class="print-tag">MongoDB</span>
+                        </div>
+                    </div>
+
+                    <!-- Job Portal -->
+                    <div class="print-item-block">
+                        <div class="print-item-header">
+                            <span class="print-item-title">Smart Job Portal with AI Screening</span>
+                            <span class="print-item-date">2026</span>
+                        </div>
+                        <ul class="print-bullet-list">
+                            <li>Built recruitment platform handling dashboard workflows with 20+ REST APIs.</li>
+                            <li>Implemented secure HTTP-only cookie sessions and index search matching.</li>
+                        </ul>
+                        <div class="print-tags">
+                            <span class="print-tag">MERN Stack</span>
+                            <span class="print-tag">React.js</span>
+                            <span class="print-tag">JWT Security</span>
+                            <span class="print-tag">Tailwind CSS</span>
+                        </div>
+                    </div>
+
+                    <!-- CodeChat-IQ -->
+                    <div class="print-item-block">
+                        <div class="print-item-header">
+                            <span class="print-item-title">CodeChat-IQ — Collaborative Workspace</span>
+                            <span class="print-item-date">2025</span>
+                        </div>
+                        <ul class="print-bullet-list">
+                            <li>Designed live pair programming editor with dynamic text synchronization.</li>
+                            <li>Integrated Stream SDK video conferencing streams and Clerk Auth.</li>
+                        </ul>
+                        <div class="print-tags">
+                            <span class="print-tag">React.js</span>
+                            <span class="print-tag">Stream SDK</span>
+                            <span class="print-tag">Clerk Auth</span>
+                            <span class="print-tag">Socket.io</span>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- Right Grid Column -->
+            <div class="print-col">
+                
+                <!-- Skills -->
+                <section class="print-section">
+                    <h2 class="print-section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                        Technical Skills
+                    </h2>
+                    
+                    <div class="print-skill-group">
+                        <div class="print-skill-group-title">Languages</div>
+                        <div class="print-skill-list">JavaScript (ES6+), TypeScript, HTML5/CSS3, C, Java</div>
+                    </div>
+                    
+                    <div class="print-skill-group">
+                        <div class="print-skill-group-title">Web & Frameworks</div>
+                        <div class="print-skill-list">React.js, Next.js, Node.js, Express.js, WebRTC, FastAPI, Socket.io, Tailwind CSS</div>
+                    </div>
+                    
+                    <div class="print-skill-group">
+                        <div class="print-skill-group-title">Databases & Tools</div>
+                        <div class="print-skill-list">MongoDB, Git/GitHub, REST APIs, JWT, CI/CD Pipeline</div>
+                    </div>
+
+                    <div class="print-skill-group">
+                        <div class="print-skill-group-title">AI & Integrations</div>
+                        <div class="print-skill-list">Groq, ElevenLabs, Whisper ASR, Stream.io, Clerk Auth</div>
+                    </div>
+                </section>
+
+                <!-- Education -->
+                <section class="print-section">
+                    <h2 class="print-section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path></svg>
+                        Education
+                    </h2>
+
+                    <div class="print-item-block">
+                        <div class="print-item-header">
+                            <span class="print-item-title">B.Tech in Computer Science</span>
+                            <span class="print-item-date">2023 — 2027</span>
+                        </div>
+                        <div style="font-size: 8.2px; color: #475569;">Anand Engineering College, Agra</div>
+                        <div style="font-size: 7.8px; color: #64748b; font-style: italic;">Focus: DSA, OOP, Web Architecture, DBMS</div>
+                    </div>
+
+                    <div class="print-item-block">
+                        <div class="print-item-header">
+                            <span class="print-item-title">Intermediate (PCM)</span>
+                            <span class="print-item-date">Class of 2021</span>
+                        </div>
+                        <div style="font-size: 8px; color: #475569;">S.N.S.M. Inter College, Hathras</div>
+                    </div>
+                </section>
+
+                <!-- Certifications -->
+                <section class="print-section">
+                    <h2 class="print-section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+                        Key Credentials
+                    </h2>
+                    <div class="print-cert-item">
+                        • <strong>JavaScript Essentials 1</strong> — Cisco Academy
+                    </div>
+                    <div class="print-cert-item">
+                        • <strong>MERN Stack Internship (A++)</strong> — ASD Academy
+                    </div>
+                    <div class="print-cert-item">
+                        • <strong>Introduction to Cybersecurity</strong> — Cisco Academy
+                    </div>
+                    <div class="print-cert-item">
+                        • <strong>Web Dev & JS Assessments</strong> — LearnTube.ai
+                    </div>
+                    <div class="print-cert-item">
+                        • <strong>AI & Data Science Workshops</strong> — HCL | GUVI
+                    </div>
+                    <div class="print-cert-item">
+                        • <strong>Digital Marketing Suite</strong> — Meta Academy
+                    </div>
+                </section>
+
+                <!-- Achievements -->
+                <section class="print-section">
+                    <h2 class="print-section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                        Achievements
+                    </h2>
+                    <div class="print-cert-item">
+                        • Shipped 10+ MERN/FastAPI web platforms.
+                    </div>
+                    <div class="print-cert-item">
+                        • Earned top grade of **A++** in industrial internship.
+                    </div>
+                    <div class="print-cert-item">
+                        • Active open-source profile (11+ repos, 300+ commits).
+                    </div>
+                </section>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+       C. LIGHTBOX MODAL CONTAINER (FOR POPUP PREVIEWS)
+       ========================================================================== -->
+    <div class="lightbox" id="certLightbox" onclick="closeLightbox(event)">
+        <div class="lightbox-card" onclick="event.stopPropagation()">
+            <div class="lightbox-header">
+                <h3 id="lightboxTitle">Credential Preview</h3>
+                <button class="btn-lightbox-close" onclick="closeLightbox()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="lightbox-body">
+                <div class="lightbox-loader" id="lightboxLoader"></div>
+                <img id="lightboxImage" src="" alt="Certificate" onload="document.getElementById('lightboxLoader').style.display='none'">
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+       E. INTERACTION SCRIPT DEFINITIONS
+       ========================================================================== -->
+    <script>
+        // Theme Management
+        function toggleTheme() {
+            const html = document.documentElement;
+            const checkbox = document.getElementById('themeToggler');
+            const isDark = checkbox.checked;
+            
+            if (isDark) {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Apply saved theme on load
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const html = document.documentElement;
+            const checkbox = document.getElementById('themeToggler');
+            
+            if (savedTheme === 'light') {
+                html.setAttribute('data-theme', 'light');
+                if (checkbox) checkbox.checked = false;
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                if (checkbox) checkbox.checked = true;
+            }
+        })();
+
+        // Print & Interactive View Toggle
+        function toggleFormatView() {
+            const body = document.body;
+            const tgl = document.getElementById('formatToggler');
+            const isPrintPreview = tgl.checked;
+            
+            if (isPrintPreview) {
+                body.classList.add('print-preview-mode');
+            } else {
+                body.classList.remove('print-preview-mode');
+                // Sync the header state if modified by printing back-and-forth
+                tgl.checked = false;
+            }
+        }
+
+        // Sync Sidebar active navigation links during scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section.content-section');
+            const links = document.querySelectorAll('.sidebar-link');
+            let currentActive = '';
+
+            sections.forEach(section => {
+                const top = section.offsetTop;
+                const height = section.clientHeight;
+                if (window.scrollY >= (top - 120)) {
+                    currentActive = section.getAttribute('id');
+                }
+            });
+
+            if (currentActive) {
+                links.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${currentActive}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+
+        // Skill Highlighter and Project Filter Interactions
+        const badges = document.querySelectorAll('.skill-badge');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        badges.forEach(badge => {
+            badge.addEventListener('click', () => {
+                const skillName = badge.getAttribute('data-skill');
+                
+                // Toggle active filter state
+                if (badge.classList.contains('active-filter')) {
+                    badge.classList.remove('active-filter');
+                    projectCards.forEach(card => card.classList.remove('dimmed'));
+                } else {
+                    // Remove filter from other badges
+                    badges.forEach(b => b.classList.remove('active-filter'));
+                    badge.classList.add('active-filter');
+                    
+                    // Filter matching projects
+                    projectCards.forEach(card => {
+                        const tags = card.getAttribute('data-tags') || '';
+                        // Case insensitive fuzzy match
+                        if (tags.toLowerCase().includes(skillName.toLowerCase())) {
+                            card.classList.remove('dimmed');
+                        } else {
+                            card.classList.add('dimmed');
+                        }
+                    });
+                }
+            });
+        });
+
+        // Lightbox Functions
+        function openLightbox(title, imgUrl) {
+            const lightbox = document.getElementById('certLightbox');
+            const img = document.getElementById('lightboxImage');
+            const titleElem = document.getElementById('lightboxTitle');
+            const loader = document.getElementById('lightboxLoader');
+            
+            titleElem.textContent = title;
+            loader.style.display = 'block';
+            img.src = imgUrl;
+            
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Lock background scroll
+        }
+
+        function closeLightbox(event) {
+            const lightbox = document.getElementById('certLightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = ''; // Release background scroll
+            
+            // Clean image source to prevent visual flicker when reopening
+            setTimeout(() => {
+                document.getElementById('lightboxImage').src = '';
+            }, 300);
+        }
+
+        // Close lightbox on Escape key
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+    </script>
+</body>
+</html>
