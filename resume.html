@@ -219,6 +219,29 @@
             stroke: var(--primary);
         }
 
+        .sidebar-link.portfolio-back-link {
+            color: var(--accent);
+            background: rgba(var(--accent-rgb), 0.1);
+            border: 1px dashed rgba(var(--accent-rgb), 0.35);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .sidebar-link.portfolio-back-link:hover {
+            color: #ffffff;
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .sidebar-link.portfolio-back-link svg {
+            stroke: var(--accent);
+        }
+
+        .sidebar-link.portfolio-back-link:hover svg {
+            stroke: #ffffff;
+        }
+
         /* Widgets Card */
         .widgets-card {
             background: var(--bg-card);
@@ -315,6 +338,36 @@
         .btn-action-primary svg {
             width: 18px;
             height: 18px;
+        }
+
+        .btn-action-secondary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 0.84rem;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .btn-action-secondary:hover {
+            background: rgba(var(--primary-rgb), 0.15);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-action-secondary svg {
+            width: 16px;
+            height: 16px;
         }
 
         /* Main Scrollable Dashboard Content */
@@ -1357,7 +1410,7 @@
 
     <!-- Floating controls active ONLY in Screen Print Preview Mode -->
     <div class="print-preview-controls" id="printPreviewControls">
-        <button class="btn-preview-control" onclick="toggleFormatView()">
+        <button class="btn-preview-control" onclick="toggleFormatView(true)">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
                 <line x1="9" y1="3" x2="9" y2="21"></line>
@@ -1383,6 +1436,10 @@
         <aside class="sidebar">
             <!-- Profile Info Card -->
             <div class="profile-card">
+                <a href="index.html" class="sidebar-link portfolio-back-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    Portfolio Website
+                </a>
                 <div class="profile-avatar">
                     <img src="assets/images/hero-portrait.jpg" alt="Rohit Chhonkar">
                     <div class="status-badge" title="Open to opportunities"></div>
@@ -1407,6 +1464,10 @@
                     <a href="#projects" class="sidebar-link">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
                         Projects
+                    </a>
+                    <a href="#education" class="sidebar-link">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path></svg>
+                        Education
                     </a>
                     <a href="#certifications" class="sidebar-link">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
@@ -1439,6 +1500,14 @@
                     </svg>
                     Print / Save PDF
                 </button>
+                <a href="resume.pdf" download class="btn-action-secondary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Download Resume PDF
+                </a>
+                <a href="index.html" class="btn-action-secondary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    Main Portfolio Site
+                </a>
             </div>
         </aside>
 
@@ -1454,7 +1523,7 @@
                     <div class="contact-grid">
                         <div class="contact-item">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                            <span>Agra, Uttar Pradesh</span>
+                            <span>Agra, India</span>
                         </div>
                         <a href="tel:+916398099404" class="contact-item">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
@@ -1468,13 +1537,17 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                             <span>rohitchhonkar.click</span>
                         </a>
+                        <a href="index.html" class="contact-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                            <span>Portfolio Site</span>
+                        </a>
                         <a href="https://github.com/rohitunheard" target="_blank" class="contact-item">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7a3.37 3.37 0 009 18.13V22"></path></svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path></svg>
                             <span>github.com/rohitunheard</span>
                         </a>
-                        <a href="https://linkedin.com/in/rohit-chhonkar-3b07622a2/" target="_blank" class="contact-item">
+                        <a href="https://www.linkedin.com/in/rohit-chhonkar-3b07622a2/" target="_blank" class="contact-item">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                            <span>linkedin.com/in/rohit-chhonkar</span>
+                            <span>linkedin.com/in/rohit-chhonkar-3b07622a2</span>
                         </a>
                     </div>
                 </div>
@@ -1490,7 +1563,7 @@
                 </div>
                 <div class="card summary-card">
                     <p>
-                        Full Stack Developer focused on building <strong>AI-powered web applications</strong> and <strong>real-time communication platforms</strong> using MERN, FastAPI, WebRTC, and modern cloud tools. Built 10+ production-style projects including conversational voice AI, collaborative pair programming workspaces, and intelligent recruitment portals. Passionate about high-throughput scalable backend architectures, clean relational and document database structures, and practical production integrations of generative AI.
+                        Full-stack developer building real-time web applications and AI-driven platforms using Node.js, FastAPI, and WebRTC. Experienced in designing scalable backends, database schemas, and secure authentication flows. Handled the complete development cycle for 10+ web apps, including voice assistants, collaborative coding spaces, and POS billing tools.
                     </p>
                 </div>
             </section>
@@ -1500,7 +1573,7 @@
                 <div class="section-header">
                     <div class="section-title">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-                        Technical Skills Matrix
+                        Technical Skills
                     </div>
                 </div>
                 <div class="skills-matrix">
@@ -1508,11 +1581,12 @@
                     <div class="card skill-category-card">
                         <h3>Languages</h3>
                         <div class="skills-badges-list">
-                            <span class="skill-badge" data-skill="JavaScript">JavaScript</span>
+                            <span class="skill-badge" data-skill="JavaScript">JavaScript (ES6+)</span>
                             <span class="skill-badge" data-skill="TypeScript">TypeScript</span>
+                            <span class="skill-badge" data-skill="HTML5">HTML5</span>
+                            <span class="skill-badge" data-skill="CSS3">CSS3</span>
                             <span class="skill-badge" data-skill="C">C</span>
                             <span class="skill-badge" data-skill="Java">Java</span>
-                            <span class="skill-badge" data-skill="HTML5">HTML5 / CSS3</span>
                         </div>
                     </div>
                     <!-- Web & Frameworks -->
@@ -1523,9 +1597,9 @@
                             <span class="skill-badge" data-skill="Next.js">Next.js</span>
                             <span class="skill-badge" data-skill="Node.js">Node.js</span>
                             <span class="skill-badge" data-skill="Express.js">Express.js</span>
-                            <span class="skill-badge" data-skill="FastAPI">FastAPI</span>
-                            <span class="skill-badge" data-skill="WebRTC">WebRTC</span>
                             <span class="skill-badge" data-skill="Socket.io">Socket.io</span>
+                            <span class="skill-badge" data-skill="WebRTC">WebRTC</span>
+                            <span class="skill-badge" data-skill="FastAPI">FastAPI</span>
                             <span class="skill-badge" data-skill="Tailwind CSS">Tailwind CSS</span>
                         </div>
                     </div>
@@ -1534,22 +1608,25 @@
                         <h3>Databases & Tools</h3>
                         <div class="skills-badges-list">
                             <span class="skill-badge" data-skill="MongoDB">MongoDB</span>
-                            <span class="skill-badge" data-skill="Git">Git / GitHub</span>
-                            <span class="skill-badge" data-skill="GitHub Actions">CI/CD Pipeline</span>
-                            <span class="skill-badge" data-skill="JWT">JWT Security</span>
+                            <span class="skill-badge" data-skill="Git">Git</span>
+                            <span class="skill-badge" data-skill="GitHub Actions">GitHub Actions</span>
+                            <span class="skill-badge" data-skill="Postman">Postman</span>
+                            <span class="skill-badge" data-skill="JWT">JWT</span>
                             <span class="skill-badge" data-skill="REST APIs">REST APIs</span>
+                            <span class="skill-badge" data-skill="CI/CD">CI/CD Workflows</span>
                         </div>
                     </div>
-                    <!-- AI & SDKs -->
+                    <!-- AI & Integrations -->
                     <div class="card skill-category-card">
                         <h3>AI & Integrations</h3>
                         <div class="skills-badges-list">
-                            <span class="skill-badge" data-skill="Groq API">Groq AI</span>
-                            <span class="skill-badge" data-skill="Whisper">Whisper ASR</span>
-                            <span class="skill-badge" data-skill="ElevenLabs">ElevenLabs Voice</span>
-                            <span class="skill-badge" data-skill="F5-TTS">F5-TTS</span>
-                            <span class="skill-badge" data-skill="Stream SDK">Stream.io SDK</span>
+                            <span class="skill-badge" data-skill="ElevenLabs">ElevenLabs</span>
+                            <span class="skill-badge" data-skill="Whisper">Whisper</span>
+                            <span class="skill-badge" data-skill="Groq">Groq Cloud API</span>
                             <span class="skill-badge" data-skill="Clerk Auth">Clerk Auth</span>
+                            <span class="skill-badge" data-skill="Stream SDK">Stream SDK</span>
+                            <span class="skill-badge" data-skill="Cloudinary">Cloudinary</span>
+                            <span class="skill-badge" data-skill="F5-TTS">F5-TTS</span>
                         </div>
                     </div>
                 </div>
@@ -1560,7 +1637,7 @@
                 <div class="section-header">
                     <div class="section-title">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                        Experience & Internships
+                        Professional Experience
                     </div>
                 </div>
                 <div class="timeline">
@@ -1571,191 +1648,284 @@
                             <div class="timeline-header">
                                 <div class="timeline-title">
                                     <h3>Full Stack Web Development Intern</h3>
-                                    <h4>Academy of Skill Development (ASD)</h4>
+                                    <h4>Academy of Skill Development (ASD) — <em>Remote, India</em></h4>
                                 </div>
-                                <span class="timeline-date">Jun 2026</span>
+                                <span class="timeline-date">June 2026</span>
                             </div>
                             <ul class="timeline-bullets">
-                                <li>Developed core candidate and recruiter authentication routes using JSON Web Tokens (JWT) and secure, signed HTTP-only cookies.</li>
-                                <li>Engineered 20+ modular, reusable UI components in React, reducing client-side load times and improving page interactions.</li>
-                                <li>Built and optimized scalable REST API endpoints in Node.js/Express for applicant matching, successfully mapping 15+ database collections.</li>
-                                <li>Collaborated with senior industry mentors using Git branch-and-merge pipelines, adopting Agile models.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Education B.Tech -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="card timeline-card">
-                            <div class="timeline-header">
-                                <div class="timeline-title">
-                                    <h3>B.Tech in Computer Science & Engineering</h3>
-                                    <h4>Anand Engineering College, Agra (Dr. A.P.J. Abdul Kalam Technical University)</h4>
-                                </div>
-                                <span class="timeline-date">2023 — Present</span>
-                            </div>
-                            <ul class="timeline-bullets">
-                                <li>Key Focus Areas: Data Structures & Algorithms (DSA), Object-Oriented Programming (OOP), Database Systems (DBMS), Web Architectures.</li>
-                                <li>Expected Graduation: Spring 2027. Maintain high performance in technical and lab curriculums.</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Education High school -->
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="card timeline-card">
-                            <div class="timeline-header">
-                                <div class="timeline-title">
-                                    <h3>Intermediate & High School (Science Stream)</h3>
-                                    <h4>S.N.S.M. Inter College, Bisawar, Hathras (UP Board)</h4>
-                                </div>
-                                <span class="timeline-date">2019 — 2021</span>
-                            </div>
-                            <ul class="timeline-bullets">
-                                <li>Class XII: Focused on Physics, Chemistry, and Mathematics (PCM). Class of 2021.</li>
-                                <li>Class X: General Sciences and Mathematics. Class of 2019.</li>
+                                <li>Developed core recruiter and applicant authentication modules using JWT and secure HTTP-only session cookies.</li>
+                                <li>Engineered 20+ reusable, highly responsive user interface components in React, reducing client-side load latency.</li>
+                                <li>Built and optimized REST API endpoints in Node.js/Express for recruiter-applicant matching across 15+ database collections.</li>
+                                <li>Adopted collaborative Git workflow best practices and participated in Agile development cycles with team mentors.</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Featured Projects Section -->
+            <!-- Key Projects Section -->
             <section class="content-section" id="projects">
                 <div class="section-header">
                     <div class="section-title">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                        Featured Projects
+                        Key Projects
                     </div>
                 </div>
                 <div class="projects-showcase">
                     
-                    <!-- Project 1: Aura Voice -->
-                    <div class="card project-card" data-tags="React.js Node.js Express.js MongoDB FastAPI Whisper Groq API ElevenLabs F5-TTS HTML5 CSS3">
+                    <!-- Project 1: Arogya Bharat -->
+                    <div class="card project-card" data-tags="React.js Vite Client-side NLP Tailwind CSS">
                         <div class="project-card-header">
                             <div class="project-title-group">
-                                <h3>Aura Voice — Conversational Voice AI</h3>
-                            </div>
-                            <span class="project-date">2026</span>
-                        </div>
-                        <p class="project-desc">
-                            Built an ultra-responsive conversational voice assistant integrating ElevenLabs, Groq API, and Whisper to complete speech-to-speech roundtrips in under 500ms. Configured FastAPI background jobs to stream real-time audio chunks and designed robust client-side interruption handlers using Custom HTML5 Canvas audio wave nodes.
-                        </p>
-                        <div class="project-tags">
-                            <span class="project-tag">React.js</span>
-                            <span class="project-tag">FastAPI</span>
-                            <span class="project-tag">Groq AI</span>
-                            <span class="project-tag">Whisper</span>
-                            <span class="project-tag">ElevenLabs</span>
-                            <span class="project-tag">MongoDB</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/rohitunheard/Aura-Voice" target="_blank" class="project-link">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path></svg>
-                                GitHub Repo
-                            </a>
-                            <a href="https://github.com/rohitunheard/Aura-Voice" target="_blank" class="project-link">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                                Live Demo
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Project 2: Smart Job Portal -->
-                    <div class="card project-card" data-tags="React.js Node.js Express.js MongoDB JWT REST APIs HTML5 CSS3 Tailwind CSS">
-                        <div class="project-card-header">
-                            <div class="project-title-group">
-                                <h3>Smart Job Portal & AI Resume Screener</h3>
-                            </div>
-                            <span class="project-date">2026</span>
-                        </div>
-                        <p class="project-desc">
-                            Engineered an end-to-end recruiter-applicant matching portal featuring secure session handling via HTTP-only cookie JWT tokens. Created dynamic matching logic indexing resume text structures across 15+ MongoDB collections, supporting custom keyword match scoring and role dashboards.
-                        </p>
-                        <div class="project-tags">
-                            <span class="project-tag">MERN Stack</span>
-                            <span class="project-tag">React.js</span>
-                            <span class="project-tag">MongoDB</span>
-                            <span class="project-tag">JWT</span>
-                            <span class="project-tag">Tailwind CSS</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/rohitunheard" target="_blank" class="project-link">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path></svg>
-                                GitHub
-                            </a>
-                            <a href="https://github.com/rohitunheard" target="_blank" class="project-link">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                                Live Portal
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Project 3: CodeChat-IQ -->
-                    <div class="card project-card" data-tags="React.js Node.js Express.js MongoDB Stream SDK Clerk Auth Tailwind CSS HTML5 CSS3">
-                        <div class="project-card-header">
-                            <div class="project-title-group">
-                                <h3>CodeChat-IQ — Collaborative Pair Programming Workspace</h3>
+                                <h3>Arogya Bharat — Clinical Portal & Triage</h3>
                             </div>
                             <span class="project-date">2025</span>
                         </div>
                         <p class="project-desc">
-                            Designed a real-time peer-to-peer workspace enabling live coding session syncs alongside video calls. Integrated Stream.io SDK streams for video feed and Clerk Auth for identity verification. Built a shared code editor syncing keypress buffers across client sessions.
+                            Developed a clinical dashboard supporting digital prescriptions, doctor schedules, and clinical symptom assessments. Built light, client-side NLP query engines to categorize and prioritize patient symptom severity routes for automated triage.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">React.js</span>
+                            <span class="project-tag">Vite</span>
+                            <span class="project-tag">Client-side NLP</span>
+                            <span class="project-tag">Tailwind CSS</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://arogyabharat-iota.vercel.app/" target="_blank" class="project-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                Live Demo
+                            </a>
+                            <a href="https://github.com/rohitunheard/Arogya-Bharat" target="_blank" class="project-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path></svg>
+                                GitHub
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 2: RoamFlow -->
+                    <div class="card project-card" data-tags="React.js Vite Lucide Icons Tailwind CSS">
+                        <div class="project-card-header">
+                            <div class="project-title-group">
+                                <h3>RoamFlow — Tour & Travel Planning System</h3>
+                            </div>
+                            <span class="project-date">2025</span>
+                        </div>
+                        <p class="project-desc">
+                            Architected an interactive itinerary builder featuring vacation package selectors, hotels, and custom travel timelines. Programmed budget estimators and reactive flight schedules, maintaining clean layouts for tablet and mobile views.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">React.js</span>
+                            <span class="project-tag">Vite</span>
+                            <span class="project-tag">Lucide Icons</span>
+                            <span class="project-tag">Tailwind CSS</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://roamflow-brown.vercel.app/" target="_blank" class="project-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                Live Demo
+                            </a>
+                            <a href="https://github.com/rohitunheard/RoamFlow-India" target="_blank" class="project-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path></svg>
+                                GitHub
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 3: E-Commerce-Store -->
+                    <div class="card project-card" data-tags="HTML5 CSS3 JavaScript Local Storage">
+                        <div class="project-card-header">
+                            <div class="project-title-group">
+                                <h3>E-Commerce-Store — Retail Storefront</h3>
+                            </div>
+                            <span class="project-date">2024</span>
+                        </div>
+                        <p class="project-desc">
+                            Designed a fully responsive online retail storefront featuring smooth search query filtering and interactive shopping cart views. Utilized HTML5, CSS3 transitions, and Local Storage APIs to persist cart items across browser sessions without backend dependencies.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">HTML5</span>
+                            <span class="project-tag">CSS3</span>
+                            <span class="project-tag">JavaScript</span>
+                            <span class="project-tag">Local Storage</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://e-sommerce-store.vercel.app/" target="_blank" class="project-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                Live Demo
+                            </a>
+                            <a href="https://github.com/rohitunheard/E-Commerce-Store" target="_blank" class="project-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path></svg>
+                                GitHub
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 4: Smart Job Portal -->
+                    <div class="card project-card" data-tags="React.js Node.js Express.js MongoDB JWT REST APIs HTML5 CSS3">
+                        <div class="project-card-header">
+                            <div class="project-title-group">
+                                <h3>Smart Job Portal with AI Resume Screening</h3>
+                            </div>
+                            <span class="project-date">2026</span>
+                        </div>
+                        <p class="project-desc">
+                            Developed a recruitment hub managing applicant workflows with 20+ REST endpoints and role-based client dashboards. Implemented secure session handling via HTTP-only cookies and optimized database indexes for fast candidate search queries.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">MERN Stack</span>
+                            <span class="project-tag">REST APIs</span>
+                            <span class="project-tag">JWT</span>
+                            <span class="project-tag">Cookies</span>
+                            <span class="project-tag">MongoDB</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/rohitunheard/Job-Portal-with-AI-Resume-Screening" target="_blank" class="project-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path></svg>
+                                GitHub Repo
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 5: Lilly Voice -->
+                    <div class="card project-card" data-tags="FastAPI Groq Whisper ElevenLabs Python">
+                        <div class="project-card-header">
+                            <div class="project-title-group">
+                                <h3>Lilly Voice — Real-Time Voice Assistant</h3>
+                            </div>
+                            <span class="project-date">2026</span>
+                        </div>
+                        <p class="project-desc">
+                            Real-time conversational voice assistant responding under 500ms using FastAPI, Groq Cloud API, and Whisper ASR. Implemented streaming audio packet handlers and low-latency speech pipelines.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">FastAPI</span>
+                            <span class="project-tag">Groq Cloud API</span>
+                            <span class="project-tag">Whisper</span>
+                            <span class="project-tag">ElevenLabs</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/rohitunheard/Lilly-Voice" target="_blank" class="project-link">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path></svg>
+                                GitHub Repo
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 6: CodeChat-IQ -->
+                    <div class="card project-card" data-tags="React.js Stream SDK Clerk Auth Socket.io Tailwind CSS">
+                        <div class="project-card-header">
+                            <div class="project-title-group">
+                                <h3>CodeChat-IQ — Collaborative Workspace</h3>
+                            </div>
+                            <span class="project-date">2025</span>
+                        </div>
+                        <p class="project-desc">
+                            Collaborative video/audio coding workspace via Stream SDK and Clerk Auth. Enables live coding session syncs alongside video calls and shared editor state.
                         </p>
                         <div class="project-tags">
                             <span class="project-tag">React.js</span>
                             <span class="project-tag">Stream SDK</span>
                             <span class="project-tag">Clerk Auth</span>
-                            <span class="project-tag">Tailwind CSS</span>
                             <span class="project-tag">Socket.io</span>
                         </div>
                         <div class="project-links">
-                            <a href="https://github.com/rohitunheard" target="_blank" class="project-link">
+                            <a href="https://github.com/rohitunheard/codechat-iq" target="_blank" class="project-link">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path></svg>
-                                Code
-                            </a>
-                            <a href="https://github.com/rohitunheard" target="_blank" class="project-link">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                                Live Demo
+                                GitHub Repo
                             </a>
                         </div>
                     </div>
 
-                    <!-- Project 4: Vyaapaar -->
-                    <div class="card project-card" data-tags="React.js TypeScript Vite Tailwind CSS HTML5 CSS3">
+                    <!-- Project 7: Vyaapaar -->
+                    <div class="card project-card" data-tags="React.js TypeScript Vite Tailwind CSS">
                         <div class="project-card-header">
                             <div class="project-title-group">
-                                <h3>Vyaapaar — Retail POS Billing & Analytics Dashboard</h3>
+                                <h3>Vyaapaar — POS Billing & Shift Tracker</h3>
                             </div>
                             <span class="project-date">2025</span>
                         </div>
                         <p class="project-desc">
-                            Developed a high-performance retail billing system with strict static typing using TypeScript and Vite. Integrated atomic transactional state updates mapping local inventory levels, generating detailed ledger shift files and transaction analytics.
+                            TypeScript POS billing and shifts inventory tracker built with Vite and React. Features transactional ledger states and shift reports.
                         </p>
                         <div class="project-tags">
                             <span class="project-tag">TypeScript</span>
                             <span class="project-tag">Vite</span>
                             <span class="project-tag">React.js</span>
-                            <span class="project-tag">Tailwind CSS</span>
                         </div>
                         <div class="project-links">
-                            <a href="https://github.com/rohitunheard/Vyaapaar" target="_blank" class="project-link">
+                            <a href="https://github.com/rohitunheard/-Vyaapaar-" target="_blank" class="project-link">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"></path></svg>
-                                Code Repo
-                            </a>
-                            <a href="https://github.com/rohitunheard/Vyaapaar" target="_blank" class="project-link">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                                Live Demo
+                                GitHub Repo
                             </a>
                         </div>
                     </div>
 
-                    <div class="other-projects-note">
-                        Other key projects include <strong>NexaCall</strong> (WebRTC video platform) and <strong>Synergy-Boards</strong> (Kanban system) available on my <a href="https://github.com/rohitunheard" target="_blank">GitHub profile</a>.
+                    <!-- Additional Projects -->
+                    <div class="card project-card" data-tags="WebRTC Socket.io JavaScript React.js MongoDB">
+                        <div class="project-card-header">
+                            <div class="project-title-group">
+                                <h3>NexaCall & Synergy-Boards</h3>
+                            </div>
+                            <span class="project-date">2025</span>
+                        </div>
+                        <p class="project-desc">
+                            <strong>NexaCall</strong>: WebRTC real-time peer video chat (<a href="https://github.com/rohitunheard/NexaCall" target="_blank" style="color: var(--primary);">[GitHub]</a>).<br>
+                            <strong>Synergy-Boards</strong>: Real-time collaborative Kanban board planner (<a href="https://github.com/rohitunheard/Synergy-Boards" target="_blank" style="color: var(--primary);">[GitHub]</a>).
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">WebRTC</span>
+                            <span class="project-tag">Socket.io</span>
+                            <span class="project-tag">MongoDB</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/rohitunheard/NexaCall" target="_blank" class="project-link">NexaCall GitHub</a>
+                            <a href="https://github.com/rohitunheard/Synergy-Boards" target="_blank" class="project-link">Synergy-Boards GitHub</a>
+                        </div>
                     </div>
 
+                </div>
+            </section>
+
+            <!-- Education Section -->
+            <section class="content-section" id="education">
+                <div class="section-header">
+                    <div class="section-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"></path></svg>
+                        Education
+                    </div>
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="card timeline-card">
+                            <div class="timeline-header">
+                                <div class="timeline-title">
+                                    <h3>Bachelor of Technology in Computer Science & Engineering</h3>
+                                    <h4>Anand Engineering College — <em>Agra, India</em></h4>
+                                </div>
+                                <span class="timeline-date">2023 — Present</span>
+                            </div>
+                            <ul class="timeline-bullets">
+                                <li><strong>Expected Graduation:</strong> 2027</li>
+                                <li><strong>Key Coursework:</strong> Data Structures & Algorithms, Object-Oriented Programming (OOP), Database Systems (DBMS), Web Architecture.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="card timeline-card">
+                            <div class="timeline-header">
+                                <div class="timeline-title">
+                                    <h3>Intermediate (PCM) & High School</h3>
+                                    <h4>S.N.S.M. Inter College — <em>Hathras, UP, India</em></h4>
+                                </div>
+                                <span class="timeline-date">Class of 2021 & 2019</span>
+                            </div>
+                            <ul class="timeline-bullets">
+                                <li>Senior Secondary Education in Physics, Chemistry, and Mathematics (PCM).</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -1764,7 +1934,7 @@
                 <div class="section-header">
                     <div class="section-title">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-                        Professional Certifications
+                        Certifications & Achievements
                     </div>
                 </div>
                 <div class="certs-container">
@@ -1772,7 +1942,7 @@
                     <!-- Cisco JS Essentials -->
                     <div class="card cert-card">
                         <div class="cert-info">
-                            <span class="cert-issuer">Cisco Academy & JS Inst.</span>
+                            <span class="cert-issuer">Cisco Networking Academy & JS Institute</span>
                             <h4 class="cert-name">JavaScript Essentials 1</h4>
                         </div>
                         <div class="cert-date-verify">
@@ -1787,8 +1957,8 @@
                     <!-- ASD MERN stack -->
                     <div class="card cert-card">
                         <div class="cert-info">
-                            <span class="cert-issuer">ASD Academy</span>
-                            <h4 class="cert-name">MERN Stack Internship (A++)</h4>
+                            <span class="cert-issuer">Academy of Skill Development (ASD)</span>
+                            <h4 class="cert-name">MERN Stack Training & Internship (Grade A++)</h4>
                         </div>
                         <div class="cert-date-verify">
                             <span>Jun 2026</span>
@@ -1814,25 +1984,10 @@
                         </div>
                     </div>
 
-                    <!-- LearnTube assessments -->
+                    <!-- AI Workshops -->
                     <div class="card cert-card">
                         <div class="cert-info">
-                            <span class="cert-issuer">LearnTube.ai</span>
-                            <h4 class="cert-name">Technical assessments (Web Dev & JS)</h4>
-                        </div>
-                        <div class="cert-date-verify">
-                            <span>Jul 2026</span>
-                            <button class="btn-view-cert" onclick="openLightbox('Web Development Assessment Certificate', 'assets/images/learntube-web-development.jpg')">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                Preview
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- be10x / GUVI AI -->
-                    <div class="card cert-card">
-                        <div class="cert-info">
-                            <span class="cert-issuer">be10x & GUVI | HCL</span>
+                            <span class="cert-issuer">HCL | GUVI | be10x</span>
                             <h4 class="cert-name">AI Tools & Data Science Workshops</h4>
                         </div>
                         <div class="cert-date-verify">
@@ -1843,30 +1998,15 @@
                             </button>
                         </div>
                     </div>
-
-                    <!-- Meta certifications -->
-                    <div class="card cert-card">
-                        <div class="cert-info">
-                            <span class="cert-issuer">Meta Small Business Academy</span>
-                            <h4 class="cert-name">Meta Digital Marketing Portfolio</h4>
-                        </div>
-                        <div class="cert-date-verify">
-                            <span>Dec 2023</span>
-                            <button class="btn-view-cert" onclick="openLightbox('Meta Instagram Marketing Certificate', 'assets/images/meta-instagram-marketing.png')">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                Preview
-                            </button>
-                        </div>
-                    </div>
                 </div>
             </section>
 
-            <!-- Key Achievements Section -->
+            <!-- Achievements Section -->
             <section class="content-section" id="achievements">
                 <div class="section-header">
                     <div class="section-title">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                        Key Accomplishments
+                        Key Achievements
                     </div>
                 </div>
                 <div class="achievements-grid">
@@ -1885,7 +2025,7 @@
                         </div>
                         <div class="achievement-text">
                             <h4>Grade A++ Internship</h4>
-                            <p>Awarded top grade for backend optimization at ASD Academy.</p>
+                            <p>Scored top grade of A++ in industrial internship at ASD.</p>
                         </div>
                     </div>
                     <div class="card achievement-card">
@@ -1894,7 +2034,7 @@
                         </div>
                         <div class="achievement-text">
                             <h4>Active Contributor</h4>
-                            <p>Maintain 11+ repositories and 300+ commits on GitHub.</p>
+                            <p>Active GitHub contributor with 11+ repositories and 300+ commits.</p>
                         </div>
                     </div>
                 </div>
@@ -1909,19 +2049,19 @@
         <!-- Header -->
         <header class="print-header">
             <h1>Rohit Chhonkar</h1>
-            <div class="print-role">Full Stack & AI Developer</div>
+            <div class="print-role">Full Stack &amp; AI Developer</div>
             <div class="print-contact-row">
-                <span>Agra, Uttar Pradesh</span>
+                <span>Agra, India</span>
                 <span>•</span>
                 <span>+91 6398099404</span>
                 <span>•</span>
                 <a href="mailto:contact@rohitchhonkar.click">contact@rohitchhonkar.click</a>
                 <span>•</span>
-                <a href="https://rohitchhonkar.click">rohitchhonkar.click</a>
+                <a href="https://rohitchhonkar.click" target="_blank">rohitchhonkar.click</a>
                 <span>•</span>
-                <a href="https://github.com/rohitunheard">github.com/rohitunheard</a>
+                <a href="https://github.com/rohitunheard" target="_blank">github.com/rohitunheard</a>
                 <span>•</span>
-                <a href="https://linkedin.com/in/rohit-chhonkar-3b07622a2/">linkedin.com/in/rohit-chhonkar</a>
+                <a href="https://www.linkedin.com/in/rohit-chhonkar-3b07622a2/" target="_blank">linkedin.com/in/rohit-chhonkar-3b07622a2</a>
             </div>
         </header>
 
@@ -1934,10 +2074,10 @@
                 <section class="print-section">
                     <h2 class="print-section-title">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-                        Professional Summary
+                        Summary
                     </h2>
-                    <p style="font-size: 8.2px; color: #334155; line-height: 1.35;">
-                        Full Stack Developer focused on building AI-powered web applications and real-time platforms using MERN, FastAPI, and WebRTC. Engineered conversational assistants, pair-programming workspaces, and recruitment portals. Focuses on scalable backend architectures, secure session auth, and smooth API design.
+                    <p style="font-size: 8.2px; color: #1e293b; line-height: 1.35;">
+                        Full-stack developer building real-time web applications and AI-driven platforms using Node.js, FastAPI, and WebRTC. Experienced in designing scalable backends, database schemas, and secure authentication flows. Handled the complete development cycle for 10+ web apps, including voice assistants, collaborative coding spaces, and POS billing tools.
                     </p>
                 </section>
 
@@ -1945,87 +2085,108 @@
                 <section class="print-section">
                     <h2 class="print-section-title">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                        Experience & Internships
+                        Professional Experience
                     </h2>
                     
                     <div class="print-item-block">
                         <div class="print-item-header">
                             <div>
                                 <span class="print-item-title">Full Stack Web Development Intern</span><br>
-                                <span class="print-item-subtitle">Academy of Skill Development (ASD)</span>
+                                <span class="print-item-subtitle">Academy of Skill Development (ASD) — <em>Remote, India</em></span>
                             </div>
                             <span class="print-item-date">June 2026</span>
                         </div>
                         <ul class="print-bullet-list">
-                            <li>Developed candidate-recruiter auth routes using JWT and secure HTTP-only cookies.</li>
-                            <li>Engineered 20+ responsive React components, reducing client-side load latency.</li>
-                            <li>Built REST APIs in Node.js/Express for matching algorithms across 15+ DB collections.</li>
-                            <li>Collaborated using Git branch workflows and Agile scrum methodologies.</li>
+                            <li>Developed core recruiter and applicant authentication modules using JWT and secure HTTP-only session cookies.</li>
+                            <li>Engineered 20+ reusable, highly responsive user interface components in React, reducing client-side load latency.</li>
+                            <li>Built and optimized REST API endpoints in Node.js/Express for recruiter-applicant matching across 15+ database collections.</li>
+                            <li>Adopted collaborative Git workflow best practices and participated in Agile development cycles with team mentors.</li>
                         </ul>
                     </div>
                 </section>
 
-                <!-- Featured Projects -->
+                <!-- Key Projects -->
                 <section class="print-section">
                     <h2 class="print-section-title">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                        Featured Projects
+                        Key Projects
                     </h2>
 
-                    <!-- Aura Voice -->
+                    <!-- Arogya Bharat -->
                     <div class="print-item-block">
                         <div class="print-item-header">
-                            <span class="print-item-title">Aura Voice — Conversational Voice AI</span>
-                            <span class="print-item-date">2026</span>
-                        </div>
-                        <ul class="print-bullet-list">
-                            <li>Combined ElevenLabs, Groq, and Whisper for Speech-to-Speech in under 500ms.</li>
-                            <li>Implemented FastAPI streaming audio packets and Canvas real-time visualizers.</li>
-                            <li>Built client interruption algorithms to immediately halt playback on user talk-back.</li>
-                        </ul>
-                        <div class="print-tags">
-                            <span class="print-tag">React</span>
-                            <span class="print-tag">FastAPI</span>
-                            <span class="print-tag">Groq AI</span>
-                            <span class="print-tag">Whisper</span>
-                            <span class="print-tag">MongoDB</span>
-                        </div>
-                    </div>
-
-                    <!-- Job Portal -->
-                    <div class="print-item-block">
-                        <div class="print-item-header">
-                            <span class="print-item-title">Smart Job Portal with AI Screening</span>
-                            <span class="print-item-date">2026</span>
-                        </div>
-                        <ul class="print-bullet-list">
-                            <li>Built recruitment platform handling dashboard workflows with 20+ REST APIs.</li>
-                            <li>Implemented secure HTTP-only cookie sessions and index search matching.</li>
-                        </ul>
-                        <div class="print-tags">
-                            <span class="print-tag">MERN Stack</span>
-                            <span class="print-tag">React.js</span>
-                            <span class="print-tag">JWT Security</span>
-                            <span class="print-tag">Tailwind CSS</span>
-                        </div>
-                    </div>
-
-                    <!-- CodeChat-IQ -->
-                    <div class="print-item-block">
-                        <div class="print-item-header">
-                            <span class="print-item-title">CodeChat-IQ — Collaborative Workspace</span>
+                            <span class="print-item-title">Arogya Bharat — Clinical Portal &amp; Triage</span>
                             <span class="print-item-date">2025</span>
                         </div>
-                        <ul class="print-bullet-list">
-                            <li>Designed live pair programming editor with dynamic text synchronization.</li>
-                            <li>Integrated Stream SDK video conferencing streams and Clerk Auth.</li>
-                        </ul>
-                        <div class="print-tags">
-                            <span class="print-tag">React.js</span>
-                            <span class="print-tag">Stream SDK</span>
-                            <span class="print-tag">Clerk Auth</span>
-                            <span class="print-tag">Socket.io</span>
+                        <div style="font-size: 7.8px; color: #4f46e5; font-weight: 600; margin-bottom: 2px;">
+                            React.js, Vite, Client-side NLP, Tailwind CSS • 
+                            <a href="https://arogyabharat-iota.vercel.app/" target="_blank" style="color: #4f46e5; text-decoration: none;">[Live Demo]</a> 
+                            <a href="https://github.com/rohitunheard/Arogya-Bharat" target="_blank" style="color: #4f46e5; text-decoration: none;">[GitHub]</a>
                         </div>
+                        <ul class="print-bullet-list">
+                            <li>Developed a clinical dashboard supporting digital prescriptions, doctor schedules, and clinical symptom assessments.</li>
+                            <li>Built light, client-side NLP query engines to categorize and prioritize patient symptom severity routes for automated triage.</li>
+                        </ul>
+                    </div>
+
+                    <!-- RoamFlow -->
+                    <div class="print-item-block">
+                        <div class="print-item-header">
+                            <span class="print-item-title">RoamFlow — Tour &amp; Travel Planning System</span>
+                            <span class="print-item-date">2025</span>
+                        </div>
+                        <div style="font-size: 7.8px; color: #4f46e5; font-weight: 600; margin-bottom: 2px;">
+                            React.js, Vite, Lucide Icons, Tailwind CSS • 
+                            <a href="https://roamflow-brown.vercel.app/" target="_blank" style="color: #4f46e5; text-decoration: none;">[Live Demo]</a> 
+                            <a href="https://github.com/rohitunheard/RoamFlow-India" target="_blank" style="color: #4f46e5; text-decoration: none;">[GitHub]</a>
+                        </div>
+                        <ul class="print-bullet-list">
+                            <li>Architected an interactive itinerary builder featuring vacation package selectors, hotels, and custom travel timelines.</li>
+                            <li>Programmed budget estimators and reactive flight schedules, maintaining clean layouts for tablet and mobile views.</li>
+                        </ul>
+                    </div>
+
+                    <!-- E-Commerce Store -->
+                    <div class="print-item-block">
+                        <div class="print-item-header">
+                            <span class="print-item-title">E-Commerce-Store — Retail Storefront</span>
+                            <span class="print-item-date">2024</span>
+                        </div>
+                        <div style="font-size: 7.8px; color: #4f46e5; font-weight: 600; margin-bottom: 2px;">
+                            HTML5, CSS3, JavaScript, Local Storage • 
+                            <a href="https://e-sommerce-store.vercel.app/" target="_blank" style="color: #4f46e5; text-decoration: none;">[Live Demo]</a> 
+                            <a href="https://github.com/rohitunheard/E-Commerce-Store" target="_blank" style="color: #4f46e5; text-decoration: none;">[GitHub]</a>
+                        </div>
+                        <ul class="print-bullet-list">
+                            <li>Designed a fully responsive online retail storefront featuring smooth search query filtering and interactive shopping cart views.</li>
+                            <li>Utilized HTML5, CSS3 transitions, and Local Storage APIs to persist cart items across browser sessions without backend dependencies.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Smart Job Portal -->
+                    <div class="print-item-block">
+                        <div class="print-item-header">
+                            <span class="print-item-title">Smart Job Portal with AI Resume Screening</span>
+                            <span class="print-item-date">2026</span>
+                        </div>
+                        <div style="font-size: 7.8px; color: #4f46e5; font-weight: 600; margin-bottom: 2px;">
+                            MERN Stack, REST APIs, JSON Web Tokens, Cookies • 
+                            <a href="https://github.com/rohitunheard/Job-Portal-with-AI-Resume-Screening" target="_blank" style="color: #4f46e5; text-decoration: none;">[GitHub]</a>
+                        </div>
+                        <ul class="print-bullet-list">
+                            <li>Developed a recruitment hub managing applicant workflows with 20+ REST endpoints and role-based client dashboards.</li>
+                            <li>Implemented secure session handling via HTTP-only cookies and optimized database indexes for fast candidate search queries.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Other Projects -->
+                    <div style="font-size: 8px; color: #1e293b; line-height: 1.3; margin-top: 4px; border-top: 0.5px dashed #cbd5e1; padding-top: 4px;">
+                        <strong>Other Projects:</strong> 
+                        <b>Lilly Voice</b> (Conversational assistant responding under 500ms using FastAPI, Groq, Whisper — <a href="https://github.com/rohitunheard/Lilly-Voice" target="_blank" style="color: #4f46e5; text-decoration: none;">[GitHub]</a>), 
+                        <b>CodeChat-IQ</b> (WebRTC pair programming workspace — <a href="https://github.com/rohitunheard/codechat-iq" target="_blank" style="color: #4f46e5; text-decoration: none;">[GitHub]</a>), 
+                        <b>Vyaapaar</b> (TypeScript POS dashboard — <a href="https://github.com/rohitunheard/-Vyaapaar-" target="_blank" style="color: #4f46e5; text-decoration: none;">[GitHub]</a>), 
+                        <b>NexaCall</b> (WebRTC peer video chat — <a href="https://github.com/rohitunheard/NexaCall" target="_blank" style="color: #4f46e5; text-decoration: none;">[GitHub]</a>), and 
+                        <b>Synergy-Boards</b> (Kanban planner — <a href="https://github.com/rohitunheard/Synergy-Boards" target="_blank" style="color: #4f46e5; text-decoration: none;">[GitHub]</a>).
                     </div>
                 </section>
 
@@ -2043,22 +2204,22 @@
                     
                     <div class="print-skill-group">
                         <div class="print-skill-group-title">Languages</div>
-                        <div class="print-skill-list">JavaScript (ES6+), TypeScript, HTML5/CSS3, C, Java</div>
+                        <div class="print-skill-list">JavaScript (ES6+), TypeScript, HTML5, CSS3, C, Java</div>
                     </div>
                     
                     <div class="print-skill-group">
-                        <div class="print-skill-group-title">Web & Frameworks</div>
-                        <div class="print-skill-list">React.js, Next.js, Node.js, Express.js, WebRTC, FastAPI, Socket.io, Tailwind CSS</div>
+                        <div class="print-skill-group-title">Web &amp; Frameworks</div>
+                        <div class="print-skill-list">React.js, Next.js, Node.js, Express.js, Socket.io, WebRTC, FastAPI, Tailwind CSS</div>
                     </div>
                     
                     <div class="print-skill-group">
-                        <div class="print-skill-group-title">Databases & Tools</div>
-                        <div class="print-skill-list">MongoDB, Git/GitHub, REST APIs, JWT, CI/CD Pipeline</div>
+                        <div class="print-skill-group-title">Databases &amp; Tools</div>
+                        <div class="print-skill-list">MongoDB, Git, GitHub Actions, Postman, JWT, REST APIs, CI/CD Workflows</div>
                     </div>
 
                     <div class="print-skill-group">
-                        <div class="print-skill-group-title">AI & Integrations</div>
-                        <div class="print-skill-list">Groq, ElevenLabs, Whisper ASR, Stream.io, Clerk Auth</div>
+                        <div class="print-skill-group-title">AI &amp; Integrations</div>
+                        <div class="print-skill-list">ElevenLabs, Whisper, Groq Cloud API, Clerk Auth, Stream SDK, Cloudinary, F5-TTS</div>
                     </div>
                 </section>
 
@@ -2071,19 +2232,19 @@
 
                     <div class="print-item-block">
                         <div class="print-item-header">
-                            <span class="print-item-title">B.Tech in Computer Science</span>
-                            <span class="print-item-date">2023 — 2027</span>
+                            <span class="print-item-title">B.Tech in Computer Science &amp; Engg.</span>
+                            <span class="print-item-date">2023 — Present</span>
                         </div>
-                        <div style="font-size: 8.2px; color: #475569;">Anand Engineering College, Agra</div>
-                        <div style="font-size: 7.8px; color: #64748b; font-style: italic;">Focus: DSA, OOP, Web Architecture, DBMS</div>
+                        <div style="font-size: 8.2px; color: #475569; font-weight: 600;">Anand Engineering College, Agra</div>
+                        <div style="font-size: 7.8px; color: #64748b; font-style: italic;">Focus: DSA, OOP, DBMS, Web Architecture (Graduation: 2027)</div>
                     </div>
 
                     <div class="print-item-block">
                         <div class="print-item-header">
-                            <span class="print-item-title">Intermediate (PCM)</span>
-                            <span class="print-item-date">Class of 2021</span>
+                            <span class="print-item-title">Intermediate (PCM) &amp; High School</span>
+                            <span class="print-item-date">2019 / 2021</span>
                         </div>
-                        <div style="font-size: 8px; color: #475569;">S.N.S.M. Inter College, Hathras</div>
+                        <div style="font-size: 8px; color: #475569;">S.N.S.M. Inter College, Hathras, UP, India</div>
                     </div>
                 </section>
 
@@ -2091,42 +2252,28 @@
                 <section class="print-section">
                     <h2 class="print-section-title">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-                        Key Credentials
+                        Certifications &amp; Achievements
                     </h2>
                     <div class="print-cert-item">
-                        • <strong>JavaScript Essentials 1</strong> — Cisco Academy
+                        • <strong>JavaScript Essentials 1</strong> — Cisco &amp; JS Institute
                     </div>
                     <div class="print-cert-item">
-                        • <strong>MERN Stack Internship (A++)</strong> — ASD Academy
+                        • <strong>MERN Stack Training &amp; Internship (Grade A++)</strong> — ASD
                     </div>
                     <div class="print-cert-item">
                         • <strong>Introduction to Cybersecurity</strong> — Cisco Academy
                     </div>
                     <div class="print-cert-item">
-                        • <strong>Web Dev & JS Assessments</strong> — LearnTube.ai
+                        • <strong>AI Tools &amp; Data Science Workshops</strong> — HCL | GUVI | be10x
                     </div>
-                    <div class="print-cert-item">
-                        • <strong>AI & Data Science Workshops</strong> — HCL | GUVI
-                    </div>
-                    <div class="print-cert-item">
-                        • <strong>Digital Marketing Suite</strong> — Meta Academy
-                    </div>
-                </section>
-
-                <!-- Achievements -->
-                <section class="print-section">
-                    <h2 class="print-section-title">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-                        Achievements
-                    </h2>
-                    <div class="print-cert-item">
+                    <div class="print-cert-item" style="margin-top: 4px;">
                         • Shipped 10+ MERN/FastAPI web platforms.
                     </div>
                     <div class="print-cert-item">
-                        • Earned top grade of **A++** in industrial internship.
+                        • Earned top grade of <strong>A++</strong> in internship at ASD.
                     </div>
                     <div class="print-cert-item">
-                        • Active open-source profile (11+ repos, 300+ commits).
+                        • Active GitHub profile (11+ repos, 300+ commits).
                     </div>
                 </section>
 
@@ -2191,17 +2338,21 @@
         })();
 
         // Print & Interactive View Toggle
-        function toggleFormatView() {
+        function toggleFormatView(forceOff) {
             const body = document.body;
             const tgl = document.getElementById('formatToggler');
-            const isPrintPreview = tgl.checked;
             
-            if (isPrintPreview) {
+            if (forceOff === true) {
+                body.classList.remove('print-preview-mode');
+                if (tgl) tgl.checked = false;
+                return;
+            }
+
+            if (tgl && tgl.checked) {
                 body.classList.add('print-preview-mode');
             } else {
                 body.classList.remove('print-preview-mode');
-                // Sync the header state if modified by printing back-and-forth
-                tgl.checked = false;
+                if (tgl) tgl.checked = false;
             }
         }
 
