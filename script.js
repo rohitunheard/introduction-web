@@ -213,4 +213,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // ── 7. Tasteful Entrance Reveals (Non-AI, High-Craft) ──
+    const revealTargets = document.querySelectorAll('.reveal-on-scroll');
+    if ('IntersectionObserver' in window && revealTargets.length) {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-revealed');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.08,
+            rootMargin: '0px 0px -40px 0px'
+        });
+
+        revealTargets.forEach(el => revealObserver.observe(el));
+    } else {
+        revealTargets.forEach(el => el.classList.add('is-revealed'));
+    }
+
 });
