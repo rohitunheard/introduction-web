@@ -1,6 +1,6 @@
 # Rohit Chhonkar
 
-**FULL-STACK WEB DEVELOPER | REACT, NODE.JS & FASTAPI | PRODUCT & HR-TECH EDGE**  
+**FULL STACK DEVELOPER | REACT, NODE.JS & MONGODB**  
 Agra, Uttar Pradesh | +91-6398099404 | contact@rohitchhonkar.click  
 [LinkedIn: linkedin.com/in/rohit-chhonkar-3b07622a2](https://linkedin.com/in/rohit-chhonkar-3b07622a2) | [GitHub: github.com/rohitunheard](https://github.com/rohitunheard) | [Portfolio: rohitchhonkar.click](https://rohitchhonkar.click)
 
@@ -41,25 +41,30 @@ Full-stack web developer and final-year B.Tech CSE student at Anand Engineering 
 
 ### **Smart Job Portal | Recruitment Hub with AI Resume Screening**
 * [GitHub Repository](https://github.com/rohitunheard/Job-Portal-with-AI-Resume-Screening)
-* Full-stack recruitment hub built during the ASD MERN internship. Features role-based JWT authentication, job postings, candidate applications, automated skill-match scoring against job criteria, and recruiter-candidate messaging.
+* Built a recruitment platform with AI resume screening during my ASD MERN internship (awarded Grade A++). Features role-based JWT auth, structured job postings, candidate applications, automated skill-match scoring, and direct messaging.
 * **Stack:** React (Vite), Tailwind CSS, Node.js, Express, MongoDB/Mongoose, JWT, Gemini API.
 
 ### **Lilly Voice | Real-Time Streaming AI Voice Assistant**
 * [GitHub Repository](https://github.com/rohitunheard/Lilly-Voice)
-* Streaming voice assistant pipeline using FastAPI and WebSockets, connecting browser microphone audio to Whisper STT, Groq LLM inference, and voice synthesis with instant interruption handling.
+* Built a voice assistant with real-time speech responses using FastAPI and WebSockets. Connects microphone audio directly to Whisper STT, Groq LLM inference, and voice synthesis, with instant speech interruption handling whenever the user speaks.
 * **Stack:** React, FastAPI, WebSockets, Groq API, Whisper STT, F5-TTS.
 
 ### **Arogya Bharat | Clinical Operations & Triage Portal**
 * [Live Demo](https://arogyabharat-iota.vercel.app/) | [GitHub Repository](https://github.com/rohitunheard/Arogya-Bharat)
-* Outpatient clinic operations portal featuring dedicated Doctor, Patient, and Admin workflows, appointment scheduling, digital prescriptions, and a questionnaire-based triage engine to prioritize patient urgency.
+* Built separate dashboards for doctors, patients and administrators using React and Tailwind CSS. Features appointment scheduling, digital prescriptions, and an interactive questionnaire triage tool to help clinics assess patient urgency before consultations.
 * **Stack:** React, Vite, Tailwind CSS, Context API.
 
 ### **Vyaapaar | Retail Billing & Inventory Management**
 * [GitHub Repository](https://github.com/rohitunheard/-Vyaapaar-)
-* Point-of-sale invoicing system for neighborhood retail counters. Built with instant barcode/item search, automated stock deductions upon invoice generation, and a customer credit (Khata) ledger.
+* Designed a billing system for everyday retail operations using React and TypeScript. Features quick barcode and item search, automated stock updates when bills are created, and a customer credit (Khata) ledger.
 * **Stack:** React, TypeScript, Vite, Tailwind CSS.
+
+### **RoamFlow | Travel Planning & Itinerary Suite**
+* [Live Demo](https://roamflow-brown.vercel.app/) | [GitHub Repository](https://github.com/rohitunheard/RoamFlow-India)
+* Created a website for planning trips and managing travel budgets using React and Tailwind CSS. Features interactive day-by-day itinerary timelines, dynamic cost estimates based on group size, and vacation package filters.
+* **Stack:** React, Vite, Tailwind CSS, Lucide Icons.
 
 ### **CodeChat IQ | Collaborative Pair-Programming Workspace**
 * [GitHub Repository](https://github.com/rohitunheard/codechat-iq)
-* Live collaborative workspace combining WebRTC peer-to-peer video streaming and real-time chat with a synchronized code editor for remote technical interviews.
+* Created a real-time collaborative pair-programming room using WebRTC and Stream SDK. Features synchronized code editing, live video calls, and chat so developers can collaborate without switching windows.
 * **Stack:** React, Stream SDK, Clerk Auth, MongoDB, Tailwind CSS, Node.js.

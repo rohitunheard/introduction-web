@@ -188,7 +188,7 @@ def main():
 
     # 1. HEADER
     story.append(Paragraph("Rohit Chhonkar", name_style))
-    story.append(Paragraph("Full Stack Developer &bull; BBA Graduate (1st Div) &bull; MBA in HR Candidate", role_style))
+    story.append(Paragraph("Full Stack Developer | React, Node.js &amp; MongoDB", role_style))
     
     contact_line = (
         "Agra, India  &bull;  "
@@ -205,10 +205,10 @@ def main():
     story.append(create_section_header("Summary", width, PRIMARY_COLOR, LINE_COLOR))
     story.append(Spacer(1, 2))
     summary_text = (
-        "Full-stack software developer with a practical dual foundation in computer science engineering and business management. "
-        "Completed a BBA and currently pursuing an MBA in HR (both via distance education) alongside the final year of B.Tech CSE. "
-        "Experienced in building real-time web applications, AI integrations, and scalable REST APIs with React, Node.js, Express, "
-        "MongoDB, and FastAPI. Handled complete development cycles for 11+ shipped production apps."
+        "Full-stack developer with a practical dual foundation in computer science engineering and business management. "
+        "Completed a BBA and currently pursuing an MBA in HR (both through distance education) alongside the final year of B.Tech CSE. "
+        "Experienced in building web applications, real-time audio systems, and RESTful APIs using React, Node.js, Express, "
+        "MongoDB, and FastAPI."
     )
     story.append(Paragraph(summary_text, summary_style))
     story.append(Spacer(1, 4))
@@ -218,7 +218,7 @@ def main():
     story.append(Spacer(1, 2))
     
     skills = [
-        ("Languages:", "JavaScript (ES6+), TypeScript, HTML5, CSS3, C, C++, Java"),
+        ("Languages:", "JavaScript (ES6+), TypeScript, HTML5, CSS3, C, C++, Python, SQL"),
         ("Frontend & UI:", "React.js, Vite, Next.js, Tailwind CSS, Responsive Design, State Context"),
         ("Backend & APIs:", "Node.js, Express.js, FastAPI, RESTful APIs, JWT & Cookies, WebSockets, WebRTC"),
         ("Databases & Tools:", "MongoDB, Mongoose, Git, GitHub Actions, Postman, Vercel, VS Code"),
@@ -243,7 +243,7 @@ def main():
     ))
     story.append(Spacer(1, 1.5))
     story.append(Paragraph("&#8226; Engineered recruiter-candidate authentication flows using JWT and secure HTTP-only cookies for session protection.", bullet_style))
-    story.append(Paragraph("&#8226; Built 20+ responsive React UI components and 15+ REST endpoints in Node.js/Express for candidate screening.", bullet_style))
+    story.append(Paragraph("&#8226; Built responsive React UI components and RESTful API endpoints in Node.js/Express for candidate screening.", bullet_style))
     story.append(Paragraph("&#8226; Awarded outstanding Grade <b>A++</b> and project completion letter for the Smart Job Portal system.", bullet_style))
     story.append(Spacer(1, 4))
 
@@ -254,25 +254,25 @@ def main():
     # Project 1: Lilly Voice
     links_lilly = "FastAPI, Groq API, Whisper, F5-TTS, React.js &bull; <a href='https://github.com/rohitunheard/Lilly-Voice'><font color='#2563EB'>[GitHub]</font></a>"
     story.append(create_item_header("Lilly Voice &mdash; Real-Time AI Voice Assistant", "2026", links_lilly, "", width, SECONDARY_COLOR, MUTED_COLOR))
-    story.append(Paragraph("&#8226; Low-latency voice assistant featuring streaming speech recognition, multi-engine voice studio (F5-TTS, ElevenLabs), and waveform visualizer.", bullet_style))
+    story.append(Paragraph("&#8226; Built a voice assistant with real-time speech responses using FastAPI, WebSockets, Whisper STT, Groq API, and voice interruption handling.", bullet_style))
     story.append(Spacer(1, 2.5))
 
     # Project 2: Smart Job Portal
     links_job = "React, Node.js, Express, MongoDB, Gemini API &bull; <a href='https://github.com/rohitunheard/Job-Portal-with-AI-Resume-Screening'><font color='#2563EB'>[GitHub]</font></a>"
     story.append(create_item_header("Smart Job Portal with AI Resume Screening", "2026", links_job, "", width, SECONDARY_COLOR, MUTED_COLOR))
-    story.append(Paragraph("&#8226; Automated applicant ranking against job descriptions, role-based recruiter/candidate portals, and interview coordination modules.", bullet_style))
+    story.append(Paragraph("&#8226; Built an AI-assisted job portal with resume matching, recruiter/candidate dashboards, and role-based JWT authentication.", bullet_style))
     story.append(Spacer(1, 2.5))
 
     # Project 3: Vyaapaar
     links_vyaapaar = "React.js, TypeScript, Vite, Tailwind CSS &bull; <a href='https://github.com/rohitunheard/-Vyaapaar-'><font color='#2563EB'>[GitHub]</font></a>"
     story.append(create_item_header("Vyaapaar &mdash; Retail Billing &amp; Inventory POS", "2025", links_vyaapaar, "", width, SECONDARY_COLOR, MUTED_COLOR))
-    story.append(Paragraph("&#8226; POS counter invoicing with automated stock tracking, customer KhataBook ledger logs, and visual performance reporting.", bullet_style))
+    story.append(Paragraph("&#8226; Designed a billing system for everyday retail operations with barcode search, automatic stock deduction, and KhataBook customer ledger.", bullet_style))
     story.append(Spacer(1, 2.5))
 
     # Project 4: Arogya Bharat
     links_arogya = "React, Vite, Client-side NLP, Tailwind &bull; <a href='https://arogyabharat-iota.vercel.app/'><font color='#2563EB'>[Live Demo]</font></a> &bull; <a href='https://github.com/rohitunheard/Arogya-Bharat'><font color='#2563EB'>[GitHub]</font></a>"
     story.append(create_item_header("Arogya Bharat &mdash; Clinical Portal &amp; Triage Engine", "2025", links_arogya, "", width, SECONDARY_COLOR, MUTED_COLOR))
-    story.append(Paragraph("&#8226; Multi-role hospital management portal with digital prescriptions, scheduling, and custom NLP patient symptom triage engine.", bullet_style))
+    story.append(Paragraph("&#8226; Built separate dashboards for doctors, patients and administrators with appointment scheduling, digital prescriptions, and patient triage logic.", bullet_style))
     story.append(Spacer(1, 4))
 
     # 6. EDUCATION
