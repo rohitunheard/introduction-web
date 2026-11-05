@@ -531,6 +531,43 @@ button {
     line-height: 1.45;
 }
 
+.about-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.about-beyond-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 24px;
+}
+
+.beyond-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-primary);
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+}
+
+.beyond-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.beyond-list li {
+    font-size: 0.86rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
 /* ======================================================
    FEATURED PROJECTS
    ====================================================== */
@@ -1126,10 +1163,6 @@ button {
     color: #fff;
     border-color: var(--accent);
 }
-    color: var(--text-muted);
-    border-top: 1px solid var(--border);
-    padding-top: 12px;
-}
 
 /* ======================================================
    CONTACT SECTION
@@ -1210,6 +1243,30 @@ button {
     display: flex;
     flex-direction: column;
     gap: 12px;
+}
+
+.contact-status-card {
+    background: var(--bg-surface);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    margin-bottom: 2px;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.88rem;
+    color: var(--emerald);
+    margin-bottom: 6px;
+}
+
+.status-note {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.45;
+    margin: 0;
 }
 
 .direct-contact-card {
