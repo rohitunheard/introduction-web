@@ -1,255 +1,150 @@
 /* ======================================================
-   INTERACTIVE JAVASCRIPT
+   ROHIT CHHONKAR — PORTFOLIO SCRIPT
+   Lightweight, robust, accessible interactions
    ====================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ── Cursor Glow ──────────────────────────────────────
-    const cursorGlow = document.getElementById('cursorGlow');
-    if (cursorGlow) {
-        document.addEventListener('mousemove', (e) => {
-            cursorGlow.style.left = e.clientX + 'px';
-            cursorGlow.style.top = e.clientY + 'px';
-        });
-    }
-
-    // ── Navbar scroll effect ─────────────────────────────
+    // ── 1. Navbar Scroll State & Active Section Highlighting ──
     const navbar = document.getElementById('navbar');
-    const sections = document.querySelectorAll('.section, .hero');
+    const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-link');
 
-    window.addEventListener('scroll', () => {
-        // Shrink navbar on scroll
-        navbar.classList.toggle('scrolled', window.scrollY > 50);
+    const handleScroll = () => {
+        if (!navbar) return;
+        const scrollY = window.scrollY;
 
-        // Active link highlighting
-        let current = '';
+        // Subtle shadow/border elevation when scrolled
+        if (scrollY > 30) {
+            navbar.parentElement.style.borderBottomColor = 'rgba(255, 255, 255, 0.14)';
+        } else {
+            navbar.parentElement.style.borderBottomColor = 'rgba(255, 255, 255, 0.08)';
+        }
+
+        // Active link tracking
+        let currentSectionId = '';
         sections.forEach(section => {
-            const top = section.offsetTop - 150;
-            if (window.scrollY >= top) {
-                current = section.getAttribute('id');
+            const sectionTop = section.offsetTop - 140;
+            const sectionHeight = section.offsetHeight;
+            if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                currentSectionId = section.getAttribute('id');
             }
         });
+
         navLinks.forEach(link => {
             link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
+            if (link.getAttribute('href') === `#${currentSectionId}`) {
                 link.classList.add('active');
             }
         });
-    });
+    };
 
-    // ── Mobile nav toggle ────────────────────────────────
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    // ── 2. Mobile Navigation Toggle ──
     const navToggle = document.getElementById('navToggle');
-    const navMenu = document.getElementById('navLinks');
+    const navLinksContainer = document.getElementById('navLinks');
 
-    navToggle.addEventListener('click', () => {
-        navToggle.classList.toggle('active');
-        navMenu.classList.toggle('open');
-    });
-
-    // Close menu when a link is clicked
-    navMenu.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-            navToggle.classList.remove('active');
-            navMenu.classList.remove('open');
+    if (navToggle && navLinksContainer) {
+        navToggle.addEventListener('click', () => {
+            const isOpen = navLinksContainer.classList.toggle('open');
+            navToggle.classList.toggle('active', isOpen);
+            navToggle.setAttribute('aria-expanded', isOpen);
         });
-    });
 
-    // ── Scroll animations (Intersection Observer) ────────
-    const animatedElements = document.querySelectorAll('.animate-on-scroll');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                // Stagger delay based on CSS custom property or index
-                const delay = getComputedStyle(entry.target).getPropertyValue('--delay');
-                const ms = delay ? parseFloat(delay) * 1000 : index * 80;
-                setTimeout(() => {
-                    entry.target.classList.add('visible');
-                }, Math.min(ms, 600));
-                observer.unobserve(entry.target);
-            }
-        });
-    }, {
-        threshold: 0.1,
-        rootMargin: '0px 0px -60px 0px'
-    });
-
-    animatedElements.forEach(el => observer.observe(el));
-
-    // ── Counter animation ────────────────────────────────
-    const statNumbers = document.querySelectorAll('.stat-number');
-    const counterObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const target = parseInt(entry.target.getAttribute('data-target'));
-                animateCounter(entry.target, target);
-                counterObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    statNumbers.forEach(num => counterObserver.observe(num));
-
-    function animateCounter(element, target) {
-        let current = 0;
-        const increment = target / 40;
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                element.textContent = target;
-                clearInterval(timer);
-            } else {
-                element.textContent = Math.floor(current);
-            }
-        }, 40);
-    }
-
-    // ── Skill bar animation ──────────────────────────────
-    const skillFills = document.querySelectorAll('.skill-fill');
-    const skillObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const width = entry.target.getAttribute('data-width');
-                entry.target.style.width = width + '%';
-                skillObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.3 });
-
-    skillFills.forEach(fill => skillObserver.observe(fill));
-
-    // ── Contact form (Web3Forms) ──────────────────────────
-    const contactForm = document.getElementById('contactForm');
-    const formStatus = document.getElementById('formStatus');
-    const submitBtn = document.getElementById('submitBtn');
-
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const btnText = submitBtn.querySelector('span');
-        const originalText = btnText.textContent;
-
-        // Loading state
-        btnText.textContent = 'Sending...';
-        submitBtn.disabled = true;
-        submitBtn.style.opacity = '0.7';
-        formStatus.textContent = '';
-        formStatus.className = 'form-status';
-
-        try {
-            const formData = new FormData(contactForm);
-            const response = await fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                body: formData
-            });
-            const result = await response.json();
-
-            if (result.success) {
-                btnText.textContent = 'Sent! ✓';
-                formStatus.textContent = 'Message sent successfully! I\'ll get back to you soon.';
-                formStatus.classList.add('success');
-                contactForm.reset();
-            } else {
-                throw new Error(result.message || 'Something went wrong');
-            }
-        } catch (error) {
-            btnText.textContent = 'Failed ✗';
-            formStatus.textContent = 'Oops! Could not send message. Please try again or email me directly.';
-            formStatus.classList.add('error');
-        }
-
-        // Reset button after 4 seconds
-        setTimeout(() => {
-            btnText.textContent = originalText;
-            submitBtn.disabled = false;
-            submitBtn.style.opacity = '1';
-        }, 4000);
-    });
-
-    // ── Certificates Category Filter ───────────────────────
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const certificateCards = document.querySelectorAll('.certificate-card');
-
-    if (filterButtons.length > 0 && certificateCards.length > 0) {
-        filterButtons.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remove active class from all buttons
-                filterButtons.forEach(b => b.classList.remove('active'));
-                // Add active class to clicked button
-                btn.classList.add('active');
-
-                const filterValue = btn.getAttribute('data-filter');
-
-                certificateCards.forEach(card => {
-                    const cardCategory = card.getAttribute('data-category');
-                    if (filterValue === 'all' || cardCategory === filterValue) {
-                        card.classList.remove('hide');
-                        // Fade animation effect
-                        card.style.opacity = '0';
-                        card.style.transform = 'translateY(10px)';
-                        setTimeout(() => {
-                            card.style.opacity = '1';
-                            card.style.transform = 'translateY(0)';
-                        }, 50);
-                    } else {
-                        card.classList.add('hide');
-                    }
-                });
+        // Close on link click
+        navLinksContainer.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinksContainer.classList.remove('open');
+                navToggle.classList.remove('active');
+                navToggle.setAttribute('aria-expanded', 'false');
             });
         });
     }
 
-    // ── Certificates Lightbox Modal ──────────────────────
+    // ── 3. Additional Certifications Drawer Toggle ──
+    const toggleCertsBtn = document.getElementById('toggleMoreCertsBtn');
+    const certsDrawer = document.getElementById('additionalCertsDrawer');
+
+    if (toggleCertsBtn && certsDrawer) {
+        toggleCertsBtn.addEventListener('click', () => {
+            const isHidden = certsDrawer.hasAttribute('hidden');
+            if (isHidden) {
+                certsDrawer.removeAttribute('hidden');
+                toggleCertsBtn.classList.add('active');
+                toggleCertsBtn.setAttribute('aria-expanded', 'true');
+                const btnSpan = toggleCertsBtn.querySelector('span');
+                if (btnSpan) btnSpan.textContent = 'Hide Additional Certifications & Workshops';
+            } else {
+                certsDrawer.setAttribute('hidden', '');
+                toggleCertsBtn.classList.remove('active');
+                toggleCertsBtn.setAttribute('aria-expanded', 'false');
+                const btnSpan = toggleCertsBtn.querySelector('span');
+                if (btnSpan) btnSpan.textContent = 'View Additional Certifications & Workshops (15+ More)';
+            }
+        });
+    }
+
+    // ── 4. Certificates Lightbox Modal ──
     const lightbox = document.getElementById('certificateLightbox');
     const lightboxImg = document.getElementById('lightboxImg');
     const lightboxCaption = document.getElementById('lightboxCaption');
     const lightboxClose = document.getElementById('lightboxClose');
-    const viewCertButtons = document.querySelectorAll('.btn-view-cert');
+    const viewButtons = document.querySelectorAll('.btn-view-cert');
     const certImages = document.querySelectorAll('.certificate-image img');
+    const previewSmallButtons = document.querySelectorAll('.btn-preview-small');
 
     if (lightbox && lightboxImg && lightboxClose) {
-        const openLightbox = (imgSrc, imgAlt) => {
-            lightboxImg.src = imgSrc;
-            lightboxCaption.textContent = imgAlt;
+        const openLightbox = (src, caption) => {
+            lightboxImg.src = src;
+            lightboxImg.alt = caption;
+            lightboxCaption.textContent = caption;
             lightbox.classList.add('open');
             lightbox.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden'; // Lock background scroll
+            document.body.style.overflow = 'hidden';
         };
 
         const closeLightbox = () => {
             lightbox.classList.remove('open');
             lightbox.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = ''; // Unlock background scroll
+            document.body.style.overflow = '';
         };
 
-        // Open lightbox via button click
-        viewCertButtons.forEach(btn => {
+        // Spotlight cards preview buttons
+        viewButtons.forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const card = btn.closest('.certificate-card');
+                if (!card) return;
                 const img = card.querySelector('.certificate-image img');
-                openLightbox(img.src, img.alt);
+                if (img) openLightbox(img.src, img.alt);
             });
         });
 
-        // Open lightbox via clicking the card image
+        // Click directly on certificate card image
         certImages.forEach(img => {
             img.style.cursor = 'pointer';
-            img.addEventListener('click', () => {
-                openLightbox(img.src, img.alt);
+            img.addEventListener('click', () => openLightbox(img.src, img.alt));
+        });
+
+        // Additional certificates drawer preview buttons
+        previewSmallButtons.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const src = btn.getAttribute('data-src');
+                const caption = btn.getAttribute('data-caption') || 'Certificate Preview';
+                if (src) {
+                    openLightbox(src, caption);
+                }
             });
         });
 
-        // Close events
         lightboxClose.addEventListener('click', closeLightbox);
-
         lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox || e.target.classList.contains('lightbox-container')) {
-                closeLightbox();
-            }
+            if (e.target === lightbox) closeLightbox();
         });
 
-        // Close on ESC key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && lightbox.classList.contains('open')) {
                 closeLightbox();
@@ -257,12 +152,62 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ── Smooth anchor scroll ─────────────────────────────
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
+    // ── 5. Contact Form Submission (Web3Forms) ──
+    const contactForm = document.getElementById('contactForm');
+    const formStatus = document.getElementById('formStatus');
+    const submitBtn = document.getElementById('submitBtn');
+
+    if (contactForm && formStatus && submitBtn) {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+
+            const btnSpan = submitBtn.querySelector('span');
+            const originalText = btnSpan.textContent;
+
+            btnSpan.textContent = 'Sending...';
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.75';
+            formStatus.textContent = '';
+            formStatus.className = 'form-status';
+
+            try {
+                const formData = new FormData(contactForm);
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    btnSpan.textContent = 'Message Sent!';
+                    formStatus.textContent = 'Thank you! Your message was delivered successfully. I will get back to you shortly.';
+                    formStatus.classList.add('success');
+                    contactForm.reset();
+                } else {
+                    throw new Error(result.message || 'Submission failed');
+                }
+            } catch (err) {
+                btnSpan.textContent = 'Submission Failed';
+                formStatus.textContent = 'Unable to send message right now. Please email directly at contact@rohitchhonkar.click';
+                formStatus.classList.add('error');
+            } finally {
+                setTimeout(() => {
+                    btnSpan.textContent = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '1';
+                }, 4000);
+            }
+        });
+    }
+
+    // ── 6. Smooth Scroll for Anchor Links ──
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === '#' || !href) return;
+            const target = document.querySelector(href);
             if (target) {
+                e.preventDefault();
                 target.scrollIntoView({ behavior: 'smooth' });
             }
         });
